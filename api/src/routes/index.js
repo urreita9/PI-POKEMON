@@ -2,7 +2,7 @@ const { Router } = require('express');
 const {
 	getPokemons,
 	getPokemonById,
-	getPokemonByName,
+	// getPokemonByName,
 	getPokemonTypes,
 	postPokemons,
 } = require('../controllers/controllers');
@@ -18,10 +18,7 @@ const router = Router();
 router.get('/pokemons', getPokemons);
 
 //GET /pokemons/{idPokemon}
-router.get('/pokemons/:idPokemon', getPokemonById);
-
-//GET /pokemons?name
-router.get('/pokemons/', getPokemonByName);
+router.get('/pokemons/:id', getPokemonById);
 
 //POST /pokemons
 router.post('/pokemons', postPokemons);
