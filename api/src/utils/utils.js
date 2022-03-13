@@ -3,6 +3,7 @@ const axios = require('axios');
 const fetch = async (url) => {
 	const response = await axios.get(url);
 	const { results } = response.data;
+	// console.log(results);
 	return results;
 };
 
@@ -32,6 +33,7 @@ const fetchOneByOne = async (url) => {
 			attack: attack.base_stat,
 			types: mappedTypes,
 			img,
+			createdDb: false,
 		};
 	} catch (error) {
 		return null;

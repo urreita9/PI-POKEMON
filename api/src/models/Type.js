@@ -11,6 +11,6 @@ module.exports = (sequelize) => {
 				allowNull: false,
 			},
 		},
-		{ logging: false }
+		{ logging: false, timestamps: false }
 	);
 };

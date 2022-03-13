@@ -22,7 +22,8 @@ module.exports = (sequelize) => {
 			speed: { type: DataTypes.INTEGER },
 			height: { type: DataTypes.INTEGER },
 			weight: { type: DataTypes.INTEGER },
+			createdDb: { type: DataTypes.BOOLEAN, defaultValue: true },
 		},
-		{ logging: false }
+		{ logging: false, timestamps: false }
 	);
 };

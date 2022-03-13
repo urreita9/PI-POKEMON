@@ -2,6 +2,7 @@ const { Pokemon, Type } = require('../db.js');
 const { fetchPokeApi, fetch, fetchOneByOne } = require('../utils/utils.js');
 
 const POKEMON_API_ALL = 'https://pokeapi.co/api/v2/pokemon';
+const POKEMON_API_TYPES = 'https://pokeapi.co/api/v2/type';
 
 const getPokemons = async (req, res) => {
 	try {
@@ -9,10 +10,27 @@ const getPokemons = async (req, res) => {
 
 		//fetch all pokemons from pokeApi and DB
 		const pokeApiData = await fetchPokeApi(POKEMON_API_ALL);
-		const pokeDbData = await Pokemon.findAll();
+		const pokeDbData = await Pokemon.findAll({
+			include: [
+				{
+					model: Type,
+					attributes: ['name'],
+					through: {
+						attributes: [],
+					},
+				},
+			],
+		});
 
-		//Pokemon array from pokeApi and DB
-		const allPokemonsData = [...pokeApiData, pokeDbData];
+		const newArr = pokeDbData.map((pokemon) => {
+			const typesStringArr = pokemon.dataValues.types.map((p) => p.name);
+			return {
+				...pokemon.dataValues,
+				types: typesStringArr,
+			};
+		});
+
+		const allPokemonsData = pokeApiData.concat(newArr);
 
 		if (!name) return res.status(200).json(allPokemonsData);
 
@@ -37,9 +55,22 @@ const getPokemonById = async (req, res) => {
 			if (pokeApiData) return res.status(200).json(pokeApiData);
 		}
 
-		const pokeDbData = await Pokemon.findByPk(id);
+		const pokeDbData = await Pokemon.findByPk(id, {
+			include: [
+				{
+					model: Type,
+					attributes: ['name'],
+					through: {
+						attributes: [],
+					},
+				},
+			],
+		});
+		const { dataValues } = pokeDbData;
 
-		if (pokeDbData) return res.status(200).json(pokeDbData);
+		dataValues.types = dataValues.types.map((t) => t.name);
+
+		if (pokeDbData) return res.status(200).json(dataValues);
 	} catch (error) {
 		console.log(error);
 		return res.status(404).json({ msg: 'Pokemon doesnt exist' });
@@ -65,7 +96,8 @@ const getPokemonById = async (req, res) => {
 
 const postPokemons = async (req, res) => {
 	try {
-		const { name, attack, hp, defense, speed, height, weight } = req.body;
+		const { name, attack, hp, defense, speed, height, weight, types } =
+			req.body;
 		if (!name) return res.status(400).json({ msg: 'Name is mandatory' });
 		const [pokemon, created] = await Pokemon.findOrCreate({
 			where: {
@@ -81,6 +113,11 @@ const postPokemons = async (req, res) => {
 			},
 		});
 
+		const matchTypes = await Promise.all(
+			types.map((name) => Type.findOne({ where: { name } }))
+		);
+		pokemon.addType(matchTypes);
+
 		res.status(201).json({ pokemon, created });
 	} catch (error) {
 		console.log(error);
@@ -88,18 +125,24 @@ const postPokemons = async (req, res) => {
 };
 
 const getPokemonTypes = async (req, res) => {
-	//fetch all types
-	const pokeTypes = await fetch('https://pokeapi.co/api/v2/type');
-	const data = pokeTypes.map(({ name }) => name);
-	data.forEach((type) => {
-		Type.findOrCreate({
-			where: {
-				name: type,
-			},
+	try {
+		//fetch all types
+		const pokeTypes = await fetch(POKEMON_API_TYPES);
+		const data = pokeTypes.map(({ name }) => name);
+		// console.log(data);
+		data.forEach((type) => {
+			Type.findOrCreate({
+				where: {
+					name: type,
+				},
+			});
 		});
-	});
-	const typesFromDb = await Type.findAll();
-	res.status(200).json(typesFromDb);
+
+		const typesFromDb = await Type.findAll();
+		res.status(200).json(typesFromDb);
+	} catch (error) {
+		console.log(error);
+	}
 };
 
 module.exports = {
