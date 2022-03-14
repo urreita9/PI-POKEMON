@@ -20,7 +20,8 @@ const fetchOneByOne = async (url) => {
 		const defense = stats.find((stat) => stat.stat.name === 'defense');
 		const attack = stats.find((stat) => stat.stat.name === 'attack');
 		const mappedTypes = types.map((type) => type.type.name);
-		const img = sprites.other.dream_world.front_default;
+		const imgDesktop = sprites.other.dream_world.front_default;
+		const imgMobile = sprites.front_default;
 		//Height & Weight must be modified to cm and kg
 		return {
 			id: `${id}`,
@@ -32,7 +33,8 @@ const fetchOneByOne = async (url) => {
 			defense: defense.base_stat,
 			attack: attack.base_stat,
 			types: mappedTypes,
-			img,
+			imgDesktop,
+			imgMobile,
 			createdDb: false,
 		};
 	} catch (error) {

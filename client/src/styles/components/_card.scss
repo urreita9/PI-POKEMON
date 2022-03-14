@@ -1,0 +1,28 @@
+.card_container {
+	width: 90%;
+	height: 65px;
+	display: flex;
+	align-items: center;
+	justify-content: space-around;
+	background-color: aliceblue;
+	margin-top: 10px;
+	border-radius: 5px;
+	.card_img_container {
+		height: 90%;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		.card_img {
+			max-width: 100%;
+			max-height: 100%;
+		}
+	}
+
+	.card_types {
+		.card_types_list {
+			list-style: none;
+			li {
+			}
+		}
+	}
+}

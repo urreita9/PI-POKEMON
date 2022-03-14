@@ -1,0 +1,15 @@
+{
+    "version": 3,
+    "mappings": "ACAA,AAAA,IAAI,AAAC,CACJ,MAAM,CAAE,CAAC,CACT,WAAW,CAAE,mJAEF,CACX,sBAAsB,CAAE,WAAW,CACnC,uBAAuB,CAAE,SAAS,CAClC,AAED,AAAA,IAAI,AAAC,CACJ,WAAW,CAAE,mEACH,CACV,ACZD,AAAA,cAAc,AAAC,CACd,KAAK,CAAE,KAAK,CACZ,MAAM,CAAE,KAAK,CACb,eAAe,CAAE,KAAK,CACtB,iBAAiB,CAAE,SAAS,CAC5B,mBAAmB,CAAE,MAAM,CAC3B,OAAO,CAAE,IAAI,CACb,WAAW,CAAE,MAAM,CACnB,eAAe,CAAE,MAAM,CACvB,AAED,AAAA,UAAU,AAAC,CACV,WAAW,CAAE,GAAG,CAChB,MAAM,CAAE,eAAe,CACvB,OAAO,CAAE,CAAC,CACV,OAAO,CAAE,SAAS,CAClB,SAAS,CAAE,MAAM,CACjB,cAAc,CAAE,OAAO,CACvB,gBAAgB,CAAE,KAAK,CACvB,aAAa,CAAE,OAAO,CACtB,QAAQ,CAAE,QAAQ,CAElB,MAAM,CAAE,OAAO,CACf",
+    "sources": [
+        "../client/src/styles/main.scss",
+        "../client/src/styles/general/_settings.scss",
+        "../client/src/styles/components/_entry.scss",
+        "../client/src/styles/components/_home.scss",
+        "../client/src/styles/components/_cards.scss",
+        "../client/src/styles/components/_card.scss",
+        "../client/src/styles/general/_mediaqueries.scss"
+    ],
+    "names": [],
+    "file": "main.min.css"
+}

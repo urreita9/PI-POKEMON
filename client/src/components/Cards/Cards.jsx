@@ -1,18 +1,19 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getPokemons } from '../../redux/actions/actions';
+import Card from '../Card/Card';
 
-const Cards = () => {
+const Cards = ({ windowWidth }) => {
 	const dispatch = useDispatch();
-	const pokemons = useSelector((state) => state.pokemons);
+	const pokemons = useSelector((state) => state.filteredPokemons);
 	useEffect(() => {
 		dispatch(getPokemons());
 	}, [dispatch]);
-	console.log(pokemons);
+
 	return (
-		<div>
+		<div className='cards_container'>
 			{pokemons.map((pokemon, i) => (
-				<img key={i} src={pokemon.img} />
+				<Card key={i} {...pokemon} windowWidth={windowWidth} />
 			))}
 		</div>
 	);

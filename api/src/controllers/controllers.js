@@ -77,23 +77,6 @@ const getPokemonById = async (req, res) => {
 	}
 };
 
-// const getPokemonByName = async (req, res) => {
-// 	try {
-// 		const { name } = req.query;
-// 		//fetch all pokemons from pokeApi and DB
-// 		const pokeApiData = await fetchPokeApi(POKEMON_API_ALL);
-// 		const pokeDbData = await Pokemon.findAll();
-// 		//Pokemon array from pokeApi and DB
-// 		const allPokemonsData = [...pokeApiData, pokeDbData];
-// 		const pokemon = allPokemonsData.find((pok) => pok.name === name);
-// 		if (!pokemon) return res.status(404).json({ msg: 'No pokemon found' });
-// 		res.status(200).json(pokemon);
-// 	} catch (error) {
-// 		console.log(error);
-// 		res.status(500).json({ msg: 'Please contact administrator' });
-// 	}
-// };
-
 const postPokemons = async (req, res) => {
 	try {
 		const { name, attack, hp, defense, speed, height, weight, types } =
@@ -148,7 +131,6 @@ const getPokemonTypes = async (req, res) => {
 module.exports = {
 	getPokemons,
 	getPokemonById,
-	// getPokemonByName,
 	postPokemons,
 	getPokemonTypes,
 };
