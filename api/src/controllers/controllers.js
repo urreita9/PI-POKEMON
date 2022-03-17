@@ -6,10 +6,22 @@ const POKEMON_API_TYPES = 'https://pokeapi.co/api/v2/type';
 
 const getPokemons = async (req, res) => {
 	try {
-		const { name } = req.query;
+		const { name, offset } = req.query;
+		console.log(name);
+		if (name) {
+			const pokeApiByName = await fetchOneByOne(`${POKEMON_API_ALL}/${name}`);
 
+			if (pokeApiByName) return res.status(200).json(pokeApiByName);
+			const pokeDbByName = await Pokemon.findOne({ where: { name } });
+
+			if (pokeDbByName) return res.status(200).json(pokeDbByName);
+			return res.status(400).json({ msg: 'Pokemon doesnt exist' });
+			// return res.sendStatus(400);
+		}
 		//fetch all pokemons from pokeApi and DB
-		const pokeApiData = await fetchPokeApi(POKEMON_API_ALL);
+		const pokeApiData = await fetchPokeApi(
+			`${POKEMON_API_ALL}?offset=${offset}&limit=40`
+		);
 		const pokeDbData = await Pokemon.findAll({
 			include: [
 				{
@@ -21,7 +33,7 @@ const getPokemons = async (req, res) => {
 				},
 			],
 		});
-
+		// console.log(pokeApiData);
 		const newArr = pokeDbData.map((pokemon) => {
 			const typesStringArr = pokemon.dataValues.types.map((p) => p.name);
 			return {
@@ -32,13 +44,13 @@ const getPokemons = async (req, res) => {
 
 		const allPokemonsData = pokeApiData.concat(newArr);
 
-		if (!name) return res.status(200).json(allPokemonsData);
+		return res.status(200).json(allPokemonsData);
 
-		const pokemon = allPokemonsData.find((p) => p.name === name);
-		if (!pokemon)
-			return res.status(404).json({ msg: 'Pokemon does not exist' });
+		// const pokemon = allPokemonsData.find((p) => p.name === name);
+		// if (!pokemon)
+		// 	return res.status(404).json({ msg: 'Pokemon does not exist' });
 
-		res.status(200).json(pokemon);
+		// res.status(200).json(pokemon);
 	} catch (error) {
 		console.log(error);
 		res.status(500).send({ msg: 'Please contact administrator' });

@@ -4,7 +4,7 @@ const Card = ({ imgDesktop, imgMobile, name, types, windowWidth }) => {
 	const capitalName = name.charAt(0).toUpperCase() + name.slice(1);
 
 	return (
-		<div className='card_container'>
+		<div className='card_container '>
 			<div className='card_img_container'>
 				<img
 					className='card_img'

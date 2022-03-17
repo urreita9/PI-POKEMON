@@ -1,87 +1,97 @@
 import React, { useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
-import {
-	filterAllAll,
-	filterAllType,
-	filterOriginalsCreatedAll,
-	filterOriginalsCreatedByType,
-} from '../../redux/actions/actions';
+import { useDispatch, useSelector } from 'react-redux';
+import { getPokemons } from '../../redux/actions/actions';
 import { fetchTypes } from '../../utils/utils';
-
 import Cards from '../Cards/Cards';
+import FilterForm from '../FilterForm/FilterForm';
+import OrderForm from '../OrderForm/OrderForm';
+import Pagination from '../Pagination/Pagination';
+import SearchForm from '../SearchForm/SearchForm';
 
-const Home = () => {
+const Home = ({ types }) => {
 	const dispatch = useDispatch();
+	const allPokemons = useSelector((state) => state.pokemons);
+	const pokemons = useSelector((state) => state.filteredPokemons);
+
 	const [windowWidth, setWindowWidth] = useState(window.innerWidth);
-	const [types, setTypes] = useState([]);
-	const [form, setForm] = useState({
-		created: 'All',
-		type: 'All',
-	});
-	const creation = ['All', 'Originals', 'Custom'];
+	const [offset, setOffset] = useState(0);
+	const [newOffset, setNewOffset] = useState(false);
+	const [newSearch, setNewSearch] = useState(false);
+	const [currentPage, setCurrentPage] = useState(1);
+	const [askForMore, setAskForMore] = useState(false);
+	const [filtered, setFiltered] = useState(false);
+
 	useEffect(() => {
-		// setTypes(fetchTypes().map((type) => type.name));
-		fetchTypes().then((data) => {
-			setTypes(data.map((type) => type.name).concat(['All']));
-		});
+		if (newOffset) {
+			dispatch(getPokemons(offset)); // offset = 0
+			setNewOffset(false);
+		}
+	}, [dispatch, offset]);
+
+	useEffect(() => {
+		//LISTEN TO WINDOW SIZE
 		const handleWindowResize = () => {
 			setWindowWidth(window.innerWidth);
 		};
 		window.addEventListener('resize', handleWindowResize);
+
+		//UNSUBSCRIBE
 		return () => {
 			window.removeEventListener('resize', handleWindowResize);
 		};
 	}, [windowWidth]);
 
-	const handleSubmit = (e) => {
-		const { created, type } = form;
-		e.preventDefault();
-		if (created === 'All' && type === 'All') {
-			dispatch(filterAllAll());
-		} else if (created === 'All') {
-			dispatch(filterAllType(type));
-		} else if (created === 'Originals' && type === 'All') {
-			dispatch(filterOriginalsCreatedAll(false));
-		} else if (created === 'Originals') {
-			dispatch(filterOriginalsCreatedByType({ createdDb: false, type }));
-		} else if (created === 'Custom' && type === 'All') {
-			dispatch(filterOriginalsCreatedAll(true));
-		} else if (created === 'Custom') {
-			dispatch(filterOriginalsCreatedByType({ createdDb: true, type }));
-		}
+	const handlePaginationNext = (currentPage) => {
+		setCurrentPage(currentPage);
 	};
-	const handleInputChange = (e) => {
-		setForm({
-			...form,
-			[e.target.name]: e.target.value,
-		});
+	const handleOffset = () => {
+		setAskForMore(false);
+		setOffset(offset + 40);
+		setNewOffset(true);
 	};
-	console.log(form);
+	const searchFromState = (name) => {
+		const findMyPokemon = allPokemons.find((pokemon) => pokemon.name === name);
+		if (findMyPokemon) return true;
+		return false;
+	};
+
 	return (
 		<div className='home_container'>
 			<div>Home</div>
-			<form onSubmit={handleSubmit}>
-				{creation.map((element, i) => (
-					<label key={i}>
-						{element}
-						<input
-							type='radio'
-							name='created'
-							value={element}
-							onChange={handleInputChange}
-						/>
-					</label>
-				))}
-				<select value={form.type} onChange={handleInputChange} name='type'>
-					{types.map((type, i) => (
-						<option key={i} value={type}>
-							{type}
-						</option>
-					))}
-				</select>
-				<button type='submit'>Filter</button>
-			</form>
-			<Cards windowWidth={windowWidth} />
+			<SearchForm
+				searchFromState={searchFromState}
+				setNewSearch={setNewSearch}
+			/>
+			{/* FILTER FORM */}
+			<FilterForm
+				setCurrentPage={setCurrentPage}
+				types={types}
+				setFiltered={setFiltered}
+			/>
+
+			{/* ORDER FORM */}
+			<OrderForm setCurrentPage={setCurrentPage} />
+
+			<Cards
+				pokemons={pokemons}
+				windowWidth={windowWidth}
+				limitPerPage={12}
+				currentPage={currentPage}
+				handleOffset={handleOffset}
+				setAskForMore={setAskForMore}
+				askForMore={askForMore}
+				newSearch={newSearch}
+				setNewSearch={setNewSearch}
+			/>
+			{!newSearch && (
+				<Pagination
+					currentPage={currentPage}
+					handlePaginationNext={handlePaginationNext}
+					limitPerPage={12}
+					setAskForMore={setAskForMore}
+					filtered={filtered}
+				/>
+			)}
 		</div>
 	);
 };
