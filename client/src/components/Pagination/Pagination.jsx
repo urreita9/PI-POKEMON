@@ -52,7 +52,6 @@ const Pagination = ({
 
 			<button
 				onClick={() => {
-					// if (state.pokemons.length !== state.filteredPokemons.length) return;
 					if (currentPage === pages.length) return;
 					handlePaginationNext(currentPage + 1);
 				}}

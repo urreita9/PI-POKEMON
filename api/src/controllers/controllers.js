@@ -91,8 +91,18 @@ const getPokemonById = async (req, res) => {
 
 const postPokemons = async (req, res) => {
 	try {
-		const { name, attack, hp, defense, speed, height, weight, types } =
-			req.body;
+		const {
+			name,
+			attack,
+			hp,
+			defense,
+			speed,
+			height,
+			weight,
+			types,
+			imgDesktop,
+			imgMobile,
+		} = req.body;
 		if (!name) return res.status(400).json({ msg: 'Name is mandatory' });
 		const [pokemon, created] = await Pokemon.findOrCreate({
 			where: {
@@ -105,6 +115,8 @@ const postPokemons = async (req, res) => {
 				speed,
 				height,
 				weight,
+				imgDesktop,
+				imgMobile,
 			},
 		});
 

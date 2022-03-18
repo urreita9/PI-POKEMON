@@ -23,6 +23,8 @@ module.exports = (sequelize) => {
 			height: { type: DataTypes.INTEGER },
 			weight: { type: DataTypes.INTEGER },
 			createdDb: { type: DataTypes.BOOLEAN, defaultValue: true },
+			imgDesktop: { type: DataTypes.STRING },
+			imgMobile: { type: DataTypes.STRING },
 		},
 		{ logging: false, timestamps: false }
 	);

@@ -6,6 +6,7 @@ import {
 	filterOriginalsCreatedAll,
 	filterOriginalsCreatedByType,
 } from '../../redux/actions/actions';
+import Button from '../Button/Button';
 
 const FilterForm = ({ types, setCurrentPage, setFiltered }) => {
 	const [form, setForm] = useState({
@@ -46,7 +47,7 @@ const FilterForm = ({ types, setCurrentPage, setFiltered }) => {
 		});
 	};
 	return (
-		<form onSubmit={handleSubmit}>
+		<form onSubmit={handleSubmit} className='form-flex'>
 			{creation.map((element, i) => (
 				<label key={i}>
 					{element}
@@ -65,7 +66,7 @@ const FilterForm = ({ types, setCurrentPage, setFiltered }) => {
 					</option>
 				))}
 			</select>
-			<button type='submit'>Filter</button>
+			<Button type='submit' text='Filter' className='form_button' />
 		</form>
 	);
 };

@@ -6,7 +6,6 @@ import Card from '../Card/Card';
 import Skeleton from '../Skeleton/Skeleton';
 
 const Cards = ({
-	windowWidth,
 	limitPerPage,
 	currentPage,
 	pokemons,
@@ -46,7 +45,7 @@ const Cards = ({
 								key={searchedPokemon.id}
 								to={`/pokemon/${searchedPokemon.id}`}
 							>
-								<Card {...searchedPokemon} windowWidth={windowWidth} />
+								<Card {...searchedPokemon} />
 							</Link>
 						</div>
 						<button onClick={() => setNewSearch(false)}>Show All</button>
@@ -56,11 +55,7 @@ const Cards = ({
 				<div className='cards_container'>
 					{showThisPoks.map((pokemon) => (
 						<Link key={pokemon.id} to={`/pokemon/${pokemon.id}`}>
-							<Card
-								{...pokemon}
-								windowWidth={windowWidth}
-								newSearch={newSearch}
-							/>
+							<Card {...pokemon} newSearch={newSearch} />
 						</Link>
 					))}
 					{askForMore && (

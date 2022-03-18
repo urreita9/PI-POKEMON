@@ -6,6 +6,7 @@ import {
 	orderStrengthSF,
 	orderStrengthWF,
 } from '../../redux/actions/actions';
+import Button from '../Button/Button';
 
 const OrderForm = ({ setCurrentPage }) => {
 	const [order, setOrder] = useState('Name: from A to Z');
@@ -33,7 +34,7 @@ const OrderForm = ({ setCurrentPage }) => {
 		setOrder(e.target.value);
 	};
 	return (
-		<form onSubmit={handleOrderSubmit}>
+		<form onSubmit={handleOrderSubmit} className='form-flex'>
 			<select value={order} onChange={handleOrderChange} name='order'>
 				{orders.map((order, i) => (
 					<option key={i} value={order}>
@@ -41,7 +42,7 @@ const OrderForm = ({ setCurrentPage }) => {
 					</option>
 				))}
 			</select>
-			<button type='submit'>Order</button>
+			<Button type='submit' text='Order' className='form_button' />
 		</form>
 	);
 };

@@ -3,17 +3,15 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getPokemons } from '../../redux/actions/actions';
 import { fetchTypes } from '../../utils/utils';
 import Cards from '../Cards/Cards';
-import FilterForm from '../FilterForm/FilterForm';
-import OrderForm from '../OrderForm/OrderForm';
+import Forms from '../Forms/Forms';
 import Pagination from '../Pagination/Pagination';
-import SearchForm from '../SearchForm/SearchForm';
 
-const Home = ({ types }) => {
+const Home = () => {
 	const dispatch = useDispatch();
 	const allPokemons = useSelector((state) => state.pokemons);
 	const pokemons = useSelector((state) => state.filteredPokemons);
 
-	const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+	const [types, setTypes] = useState([]);
 	const [offset, setOffset] = useState(0);
 	const [newOffset, setNewOffset] = useState(false);
 	const [newSearch, setNewSearch] = useState(false);
@@ -22,24 +20,17 @@ const Home = ({ types }) => {
 	const [filtered, setFiltered] = useState(false);
 
 	useEffect(() => {
-		if (newOffset) {
+		fetchTypes().then((data) => {
+			setTypes(data.map((type) => type.name).concat(['All']));
+		});
+	}, []);
+
+	useEffect(() => {
+		if (!allPokemons.length || newOffset) {
 			dispatch(getPokemons(offset)); // offset = 0
 			setNewOffset(false);
 		}
 	}, [dispatch, offset]);
-
-	useEffect(() => {
-		//LISTEN TO WINDOW SIZE
-		const handleWindowResize = () => {
-			setWindowWidth(window.innerWidth);
-		};
-		window.addEventListener('resize', handleWindowResize);
-
-		//UNSUBSCRIBE
-		return () => {
-			window.removeEventListener('resize', handleWindowResize);
-		};
-	}, [windowWidth]);
 
 	const handlePaginationNext = (currentPage) => {
 		setCurrentPage(currentPage);
@@ -49,32 +40,19 @@ const Home = ({ types }) => {
 		setOffset(offset + 40);
 		setNewOffset(true);
 	};
-	const searchFromState = (name) => {
-		const findMyPokemon = allPokemons.find((pokemon) => pokemon.name === name);
-		if (findMyPokemon) return true;
-		return false;
-	};
 
 	return (
 		<div className='home_container'>
 			<div>Home</div>
-			<SearchForm
-				searchFromState={searchFromState}
+			<Forms
 				setNewSearch={setNewSearch}
-			/>
-			{/* FILTER FORM */}
-			<FilterForm
 				setCurrentPage={setCurrentPage}
 				types={types}
 				setFiltered={setFiltered}
 			/>
 
-			{/* ORDER FORM */}
-			<OrderForm setCurrentPage={setCurrentPage} />
-
 			<Cards
 				pokemons={pokemons}
-				windowWidth={windowWidth}
 				limitPerPage={12}
 				currentPage={currentPage}
 				handleOffset={handleOffset}

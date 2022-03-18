@@ -2,6 +2,7 @@ import {
 	GET_POKEMONS,
 	GET_POKEMON_BY_NAME_FROM_API,
 	GET_POKEMON_BY_NAME_FROM_STATE,
+	GET_POKEMON_BY_ID_FROM_API,
 	GET_POKEMON_BY_ID_FROM_STATE,
 	FILTER_ALL_ALL,
 	FILTER_ALL_TYPE,
@@ -11,6 +12,8 @@ import {
 	ORDER_NAME_Z_A,
 	ORDER_STRENGTH_S_F,
 	ORDER_STRENGTH_W_F,
+	CLEAN_POKEMON,
+	POST_POKEMON,
 } from '../actions/actions';
 
 const initialState = {
@@ -42,6 +45,9 @@ const pokemonReducer = (state = initialState, action) => {
 				(pokemon) => pokemon.name === payload
 			);
 			return { ...state, pokemon: findPokemon };
+
+		case GET_POKEMON_BY_ID_FROM_API:
+			return { ...state, pokemon: payload };
 
 		case GET_POKEMON_BY_ID_FROM_STATE:
 			const findByIdFromState = state.pokemons.find(
@@ -124,6 +130,12 @@ const pokemonReducer = (state = initialState, action) => {
 				return 0;
 			});
 			return { ...state, filteredPokemons: orderStrengthSF };
+
+		case CLEAN_POKEMON:
+			return { ...state, pokemon: payload };
+
+		case POST_POKEMON:
+			return { ...state, pokemon: payload.pokemon };
 		default:
 			return state;
 	}

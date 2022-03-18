@@ -1,30 +1,43 @@
 import React, { useState, useEffect } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { postPokemons } from '../../redux/actions/actions';
+import { fetchTypes, getPokemons } from '../../utils/utils';
+const initialState = {
+	name: '',
+	attack: null,
+	defense: null,
+	strength: null,
+	speed: null,
+	height: null,
+	weight: null,
+	types: [],
+	imgDesktop: null,
+	imgMobile: null,
+};
 
-const Create = ({ types }) => {
-	const [form, setForm] = useState({
-		name: '',
-		attack: '',
-		defense: '',
-		strength: '',
-		speed: '',
-		height: '',
-		weight: '',
-		types: [],
-		imgDesktop: '',
-		imgMobile: '',
-	});
+const Create = () => {
+	const dispatch = useDispatch();
+	const [form, setForm] = useState(initialState);
+	const [types, setTypes] = useState([]);
 	const [myTypes, setMyTypes] = useState([]);
+	const [offset, setOffset] = useState(0);
+	const [images, setImages] = useState([]);
+	useEffect(() => {
+		fetchTypes().then((data) => {
+			setTypes(data.map((type) => type.name).concat(['All']));
+		});
+		getPokemons(offset).then((data) => {
+			// console.log(data);
+			setImages(
+				data.map((pokemon) => ({
+					imgDesktop: pokemon.imgDesktop,
+					imgMobile: pokemon.imgMobile,
+				}))
+			);
+		});
+	}, [offset]);
 
-	// useEffect(() => {
-	// 	console.log(pokemons);
-	// }, []);
-	const pokemons = useSelector((state) => state.pokemons);
-	const images = pokemons.map((pokemon) => ({
-		imgDesktop: pokemon.imgDesktop,
-		imgMobile: pokemon.imgMobile,
-	}));
-
+	console.log(images);
 	const handleInputChange = (e) => {
 		if (e.target.name === 'types') {
 			if (myTypes.length === 2) return;
@@ -38,6 +51,9 @@ const Create = ({ types }) => {
 	};
 	const handleSubmit = (e) => {
 		e.preventDefault();
+
+		dispatch(postPokemons({ ...form, types: myTypes }));
+		setForm(initialState);
 	};
 	const handleDeleteTypes = (type) => {
 		setMyTypes(myTypes.filter((t) => t !== type));
@@ -56,7 +72,7 @@ const Create = ({ types }) => {
 				<br />
 				<label>Attack: </label>
 				<input
-					type='text'
+					type='number'
 					name='attack'
 					value={form.attack}
 					onChange={handleInputChange}
@@ -64,7 +80,7 @@ const Create = ({ types }) => {
 				<br />
 				<label>Defense: </label>
 				<input
-					type='text'
+					type='number'
 					name='defense'
 					value={form.defense}
 					onChange={handleInputChange}
@@ -72,7 +88,7 @@ const Create = ({ types }) => {
 				<br />
 				<label>Strength: </label>
 				<input
-					type='text'
+					type='number'
 					name='strength'
 					value={form.strength}
 					onChange={handleInputChange}
@@ -80,7 +96,7 @@ const Create = ({ types }) => {
 				<br />
 				<label>Speed: </label>
 				<input
-					type='text'
+					type='number'
 					name='speed'
 					value={form.speed}
 					onChange={handleInputChange}
@@ -88,7 +104,7 @@ const Create = ({ types }) => {
 				<br />
 				<label>Height: </label>
 				<input
-					type='text'
+					type='number'
 					name='height'
 					value={form.height}
 					onChange={handleInputChange}
@@ -96,7 +112,7 @@ const Create = ({ types }) => {
 				<br />
 				<label>Weight: </label>
 				<input
-					type='text'
+					type='number'
 					name='weight'
 					value={form.weight}
 					onChange={handleInputChange}
@@ -140,6 +156,13 @@ const Create = ({ types }) => {
 							}
 						></img>
 					))}
+				<button
+					onClick={() => {
+						setOffset(offset + 40);
+					}}
+				>
+					Get More Pics
+				</button>
 
 				<button type='submit'>Create Pokemon!</button>
 			</form>
