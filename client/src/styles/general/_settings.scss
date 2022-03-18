@@ -3,13 +3,21 @@
 	padding: 0;
 	box-sizing: border-box;
 }
+@font-face {
+	font-family: comic;
+	src: url('../../font/BEST\ FRIENDS.OTF');
+}
 body {
-	font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-		'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-		sans-serif;
+	// font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+	// 	'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+	// 	sans-serif;
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
-	background-color: #272727;
+	// background-color: #272727;
+	// background-image: linear-gradient(45deg, #6303b1, #ff0099);
+	background-color: #ffe84d;
+	// background-image: linear-gradient(0deg, #f0f3f5 2%, #f50828 96%);
+	font-family: comic;
 	min-height: 100vh;
 	margin: 0;
 	padding: 0;

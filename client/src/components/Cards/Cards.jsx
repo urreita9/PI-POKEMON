@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { getPokemons } from '../../redux/actions/actions';
+import { useSelector } from 'react-redux';
+
 import { Link } from 'react-router-dom';
 import Card from '../Card/Card';
 import Skeleton from '../Skeleton/Skeleton';
@@ -59,7 +59,9 @@ const Cards = ({
 						</Link>
 					))}
 					{askForMore && (
-						<button onClick={handleOffset}>Get More Pokemons!</button>
+						<button onClick={handleOffset} className='form_button'>
+							Get More Pokemons!
+						</button>
 					)}
 				</div>
 			)}

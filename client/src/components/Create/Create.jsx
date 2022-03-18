@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { postPokemons } from '../../redux/actions/actions';
 import { fetchTypes, getPokemons } from '../../utils/utils';
 const initialState = {
 	name: '',
 	attack: null,
 	defense: null,
-	strength: null,
+	hp: null,
 	speed: null,
 	height: null,
 	weight: null,
@@ -29,10 +29,12 @@ const Create = () => {
 		getPokemons(offset).then((data) => {
 			// console.log(data);
 			setImages(
-				data.map((pokemon) => ({
-					imgDesktop: pokemon.imgDesktop,
-					imgMobile: pokemon.imgMobile,
-				}))
+				data
+					.filter((pokemon) => pokemon.createdDb === false)
+					.map((pokemon) => ({
+						imgDesktop: pokemon.imgDesktop,
+						imgMobile: pokemon.imgMobile,
+					}))
 			);
 		});
 	}, [offset]);
@@ -60,70 +62,87 @@ const Create = () => {
 	};
 
 	return (
-		<div>
-			<form onSubmit={handleSubmit}>
-				<label>Name: </label>
-				<input
-					type='text'
-					name='name'
-					value={form.name}
-					onChange={handleInputChange}
-				/>
-				<br />
-				<label>Attack: </label>
-				<input
-					type='number'
-					name='attack'
-					value={form.attack}
-					onChange={handleInputChange}
-				/>
-				<br />
-				<label>Defense: </label>
-				<input
-					type='number'
-					name='defense'
-					value={form.defense}
-					onChange={handleInputChange}
-				/>
-				<br />
-				<label>Strength: </label>
-				<input
-					type='number'
-					name='strength'
-					value={form.strength}
-					onChange={handleInputChange}
-				/>
-				<br />
-				<label>Speed: </label>
-				<input
-					type='number'
-					name='speed'
-					value={form.speed}
-					onChange={handleInputChange}
-				/>
-				<br />
-				<label>Height: </label>
-				<input
-					type='number'
-					name='height'
-					value={form.height}
-					onChange={handleInputChange}
-				/>
-				<br />
-				<label>Weight: </label>
-				<input
-					type='number'
-					name='weight'
-					value={form.weight}
-					onChange={handleInputChange}
-				/>
-				<br />
+		<div className='create'>
+			<form onSubmit={handleSubmit} className='form-create'>
+				<div className='input_container'>
+					<label>Name: </label>
+					<input
+						type='text'
+						name='name'
+						value={form.name}
+						onChange={handleInputChange}
+						placeholder='Pikachu'
+					/>
+				</div>
+
+				<div className='input_container'>
+					<label>Attack: </label>
+					<input
+						type='number'
+						name='attack'
+						value={form.attack}
+						onChange={handleInputChange}
+						placeholder='53'
+					/>
+				</div>
+
+				<div className='input_container'>
+					<label>Defense: </label>
+					<input
+						type='number'
+						name='defense'
+						value={form.defense}
+						onChange={handleInputChange}
+						placeholder='67'
+					/>
+				</div>
+
+				<div className='input_container'>
+					<label>Strength: </label>
+					<input
+						type='number'
+						name='strength'
+						value={form.hp}
+						onChange={handleInputChange}
+						placeholder='75'
+					/>
+				</div>
+
+				<div className='input_container'>
+					<label>Speed: </label>
+					<input
+						type='number'
+						name='speed'
+						value={form.speed}
+						onChange={handleInputChange}
+						placeholder='21'
+					/>
+				</div>
+
+				<div className='input_container'>
+					<label>Height: </label>
+					<input
+						type='number'
+						name='height'
+						value={form.height}
+						onChange={handleInputChange}
+						placeholder='210'
+					/>
+				</div>
+
+				<div className='input_container'>
+					<label>Weight: </label>
+					<input
+						type='number'
+						name='weight'
+						value={form.weight}
+						onChange={handleInputChange}
+						placeholder='18'
+					/>
+				</div>
+
 				<label>Types (2 max): </label>
-				<select
-					// value={myTypes[myTypes.length - 1]}
-					onChange={handleInputChange}
-					name='types'
-				>
+				<select onChange={handleInputChange} name='types'>
 					{types.map((type, i) => (
 						<option key={i} value={type}>
 							{type}
@@ -138,33 +157,44 @@ const Create = () => {
 						</div>
 					))}
 				{form.imgDesktop && (
-					<img className='pokeImgSelected' src={form.imgDesktop}></img>
+					<img
+						className='pokeImgSelected'
+						src={form.imgDesktop}
+						alt='pokemon selected'
+					></img>
 				)}
 				<br />
-				{images.length &&
-					images.map((image, i) => (
-						<img
-							className='pokeImg'
-							key={i}
-							src={image.imgDesktop}
-							onClick={() =>
-								setForm({
-									...form,
-									imgDesktop: image.imgDesktop,
-									imgMobile: image.imgMobile,
-								})
-							}
-						></img>
-					))}
+				<div className='form_imgs'>
+					{images.length &&
+						images.map((image, i) => (
+							<img
+								className='pokeImg'
+								key={i}
+								src={image.imgDesktop}
+								alt='pokemon'
+								onClick={() =>
+									setForm({
+										...form,
+										imgDesktop: image.imgDesktop,
+										imgMobile: image.imgMobile,
+									})
+								}
+							></img>
+						))}
+				</div>
+
 				<button
 					onClick={() => {
 						setOffset(offset + 40);
 					}}
+					className='form_button'
 				>
 					Get More Pics
 				</button>
 
-				<button type='submit'>Create Pokemon!</button>
+				<button type='submit' className='form_button'>
+					Create Pokemon!
+				</button>
 			</form>
 		</div>
 	);

@@ -6,13 +6,47 @@ $medium: 900px;
 	.cards_container {
 		display: grid;
 		grid-template-columns: repeat(3, 1fr);
-		grid-auto-rows: 180px;
+		grid-auto-rows: max-content;
 
 		a,
 		.skeleton_card {
 			width: 90%;
 			height: 150px;
 		}
+		a,
+		.card_container {
+			font-size: 3.5vw;
+			letter-spacing: 1px;
+			&:hover {
+				padding: 3px;
+			}
+		}
+	}
+	.forms_container {
+		flex-direction: row;
+		width: 90%;
+		margin: 0 auto;
+	}
+	.create .form-create .form_imgs {
+		width: 400px;
+	}
+	.detail_container {
+		h2 {
+			font-size: 5em;
+			letter-spacing: 6px;
+		}
+		.detail_content {
+			.pokemon_image {
+				width: 500px;
+				height: 500px;
+			}
+		}
+	}
+	.desktop {
+		display: flex;
+	}
+	.mobile {
+		display: none;
 	}
 }
 //#B12F2F

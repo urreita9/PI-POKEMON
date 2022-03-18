@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
 	cleanPokemon,
@@ -25,24 +25,31 @@ const Detail = (props) => {
 
 	const capitalName =
 		pokemon.name?.charAt(0).toUpperCase() + pokemon.name?.slice(1);
+	const comic = 'url(/assets/comic_cloud.png)';
+
 	return (
 		<div className='detail_container'>
-			<div className='detail_content'>
-				<div>
-					<h3>{pokemon.name && capitalName}</h3>
-					<img src={pokemon.imgMobile} alt='' />
-				</div>
-				<div>
+			<h2>{pokemon.name && capitalName}!!</h2>
+			<div className='detail_content' style={{ backgroundImage: comic }}>
+				<div
+					style={{ backgroundImage: `url(${pokemon.imgMobile})` }}
+					className='pokemon_image'
+				></div>
+				{/* <img src={pokemon.imgMobile} alt='pokemon' className='pokemon_image' /> */}
+			</div>
+			{/* <div>
 					<img src={pokemon.imgDesktop} alt='' />
-				</div>
-				<div></div>
-				<div>
+				</div> */}
+			<div className='detail_stats_container'>
+				<div className='detail_stats_numbers'>
 					<p>⚔️ {pokemon.attack}</p>
 					<p>🛡️ {pokemon.defense}</p>
-					<p>💪 {pokemon.hp}</p>
+					<p>🦾 {pokemon.hp}</p>
 					<p>🏃 {pokemon.speed}</p>
-					<p>Height {pokemon.height}</p>
-					<p>Weight {pokemon.weight}</p>
+				</div>
+				<div className='detail_stats_numbers'>
+					<span>Height {pokemon.height}</span>
+					<span>Weight {pokemon.weight}</span>
 				</div>
 			</div>
 		</div>

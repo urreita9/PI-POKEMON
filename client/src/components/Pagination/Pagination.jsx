@@ -30,12 +30,13 @@ const Pagination = ({
 	}, [currentPage]);
 
 	return (
-		<div>
+		<div className='pagination'>
 			<button
 				onClick={() => {
 					if (currentPage === 1) return;
 					handlePaginationNext(currentPage - 1);
 				}}
+				className='form_button pag'
 			>
 				Prev
 			</button>
@@ -45,6 +46,7 @@ const Pagination = ({
 					onClick={() => {
 						handlePaginationNext(page);
 					}}
+					className={`form_button pag ${page === currentPage ? 'active' : ''}`}
 				>
 					{page}
 				</button>
@@ -55,6 +57,7 @@ const Pagination = ({
 					if (currentPage === pages.length) return;
 					handlePaginationNext(currentPage + 1);
 				}}
+				className='form_button pag'
 			>
 				Next
 			</button>

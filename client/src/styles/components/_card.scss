@@ -4,9 +4,14 @@
 	display: flex;
 	align-items: center;
 	justify-content: space-around;
-	background-color: aliceblue;
+	// background-color: #ff6dc8;
+	border: #000a04 3px dashed;
+	font-size: 2em;
 	border-radius: 5px;
-	color: black;
+	color: #f40061;
+	-webkit-text-stroke-width: 1px;
+	-webkit-text-stroke-color: black;
+
 	.card_img_container {
 		height: 90%;
 		display: flex;
@@ -21,6 +26,63 @@
 	.card_types {
 		.card_types_list {
 			list-style: none;
+			li {
+				font-size: 0.7em;
+
+				-webkit-text-stroke-width: 1px;
+				-webkit-text-stroke-color: black;
+			}
+			.grass {
+				color: #24d84c;
+			}
+			.water {
+				color: #24adf3;
+			}
+			.fire {
+				color: #ea3321;
+			}
+			.poison {
+				color: #7f7fd3;
+			}
+			.flying {
+				color: #cfecfa;
+			}
+			.bug {
+				color: #7cb342;
+			}
+			.electric {
+				color: #feff4d;
+			}
+			.ground {
+				color: #896565;
+			}
+			.fairy {
+				color: #ffbbbb;
+			}
+			.fighting {
+				color: #0a0707;
+			}
+			.psychic {
+				color: #ff8141;
+			}
+			.rock {
+				color: #e2d3ff;
+			}
+			.steel {
+				color: #473535;
+			}
+			.ice {
+				color: #1d61cc;
+			}
+			.dragon {
+				color: #b12f2f;
+			}
+			.dark {
+				color: #000000;
+			}
+			.ghost {
+				color: #ffffff;
+			}
 		}
 	}
 }

@@ -1,23 +1,54 @@
+// @font-face {
+// 	font-family: comic;
+// 	src: url('../../font/BEST\ FRIENDS.OTF');
+// }
 .detail_container {
+	font-family: comic;
+	text-align: center;
 	width: 100vw;
-	height: 100vh;
+	height: 80%;
 	margin: 0 auto;
-	color: white;
+	color: #f40061;
+	-webkit-text-stroke-width: 1px;
+	-webkit-text-stroke-color: black;
 	font-size: 20px;
-	position: relative;
-	background-image: linear-gradient(45deg, #6303b1, #ff0099);
-	// &::before {
-	// 	position: absolute;
-	// 	content: '';
-	// 	top: 0;
-	// 	right: 0;
-	// 	left: 0;
-	// 	bottom: 0;
-	// 	background-image: linear-gradient(45deg, #6303b1, #ff0099);
-	// 	transform: skewY(-11deg);
-	// }
+	h2 {
+		font-size: 55px;
+		letter-spacing: 2px;
+	}
 	.detail_content {
-		// transform: skewY(11deg);
-		position: relative;
+		max-width: 800px;
+		max-height: 800px;
+		margin: 0 auto;
+		display: flex;
+		align-content: center;
+		justify-content: center;
+		background-size: contain;
+		background-repeat: no-repeat;
+		background-position: center;
+		.pokemon_image {
+			width: 300px;
+			height: 300px;
+			background-size: 25%;
+			background-repeat: no-repeat;
+			background-position: center;
+		}
+	}
+	.detail_stats_container {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		flex-direction: column;
+		font-size: 2em;
+		.detail_stats_numbers {
+			display: flex;
+			align-items: center;
+			justify-content: space-around;
+			width: 30%;
+			padding: 0 10px;
+			color: #24d84c;
+			-webkit-text-stroke-width: 1px;
+			-webkit-text-stroke-color: black;
+		}
 	}
 }

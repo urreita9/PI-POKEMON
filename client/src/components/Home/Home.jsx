@@ -43,7 +43,6 @@ const Home = () => {
 
 	return (
 		<div className='home_container'>
-			<div>Home</div>
 			<Forms
 				setNewSearch={setNewSearch}
 				setCurrentPage={setCurrentPage}
@@ -56,7 +55,6 @@ const Home = () => {
 				limitPerPage={12}
 				currentPage={currentPage}
 				handleOffset={handleOffset}
-				setAskForMore={setAskForMore}
 				askForMore={askForMore}
 				newSearch={newSearch}
 				setNewSearch={setNewSearch}

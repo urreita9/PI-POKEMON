@@ -61,7 +61,7 @@ const FilterForm = ({ types, setCurrentPage, setFiltered }) => {
 			))}
 			<select value={form.type} onChange={handleInputChange} name='type'>
 				{types.map((type, i) => (
-					<option key={i} value={type}>
+					<option key={i} value={type} className='option'>
 						{type}
 					</option>
 				))}

@@ -1,11 +1,16 @@
 @import './general/settings';
 @import './components/entry';
+
+@import './components/nav';
+@import './components/socials';
 @import './components/home';
 @import './components/forms';
 @import './components/cards';
 @import './components/skeleton';
 @import './components/card';
 @import './components/detail';
+@import './components/pagination';
 @import './components/create';
+
 @import './components/button';
 @import './general/mediaqueries';

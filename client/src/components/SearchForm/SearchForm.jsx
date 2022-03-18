@@ -14,6 +14,7 @@ const SearchForm = ({ setNewSearch }) => {
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
+		if (!name) return;
 		if (searchFromState('name', name.toLowerCase(), pokemons)) {
 			dispatch(getPokemonByNameFromState(name.toLowerCase()));
 			setName('');

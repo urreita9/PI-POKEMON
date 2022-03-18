@@ -1,0 +1,13 @@
+.pagination {
+	width: 90%;
+	margin: 0 auto;
+	text-align: center;
+	.pag {
+		padding: 5px 10px;
+	}
+	.active {
+		color: #f40061;
+		-webkit-text-stroke-width: 1px;
+		-webkit-text-stroke-color: black;
+	}
+}
