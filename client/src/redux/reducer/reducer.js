@@ -26,10 +26,13 @@ const pokemonReducer = (state = initialState, action) => {
 	const { type, payload } = action;
 	switch (type) {
 		case GET_POKEMONS:
+			const takeOurPrevDb = state.pokemons.filter(
+				(pokemon) => pokemon.createdDb === false
+			);
 			return {
 				...state,
-				pokemons: [...state.pokemons, ...payload],
-				filteredPokemons: [...state.pokemons, ...payload],
+				pokemons: [...takeOurPrevDb, ...payload],
+				filteredPokemons: [...takeOurPrevDb, ...payload],
 			};
 
 		case GET_POKEMON_BY_NAME_FROM_API:
@@ -46,8 +49,16 @@ const pokemonReducer = (state = initialState, action) => {
 			);
 			return { ...state, pokemon: findPokemon };
 
+		// case GET_POKEMON_BY_ID_FROM_API:
+		// 	return { ...state, pokemon: payload };
+
 		case GET_POKEMON_BY_ID_FROM_API:
-			return { ...state, pokemon: payload };
+			return {
+				...state,
+				pokemon: payload,
+				pokemons: [...state.pokemons, payload],
+				filteredPokemons: [...state.pokemons, payload],
+			};
 
 		case GET_POKEMON_BY_ID_FROM_STATE:
 			const findByIdFromState = state.pokemons.find(
@@ -134,8 +145,14 @@ const pokemonReducer = (state = initialState, action) => {
 		case CLEAN_POKEMON:
 			return { ...state, pokemon: payload };
 
-		case POST_POKEMON:
-			return { ...state, pokemon: payload.pokemon };
+		// case POST_POKEMON:
+		// 	console.log('REDUCER PAYLOAD', payload);
+		// 	return {
+		// 		...state,
+		// 		pokemon: payload.pokemon,
+		// 		pokemons: [...state.pokemons, payload.pokemon],
+		// 		filteredPokemons: [...state.filteredPokemons, payload.pokemon],
+		// 	};
 		default:
 			return state;
 	}

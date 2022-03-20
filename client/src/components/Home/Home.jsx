@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getPokemons } from '../../redux/actions/actions';
 import { fetchTypes } from '../../utils/utils';
@@ -11,34 +11,32 @@ const Home = () => {
 	const allPokemons = useSelector((state) => state.pokemons);
 	const pokemons = useSelector((state) => state.filteredPokemons);
 
-	const [types, setTypes] = useState([]);
-	const [offset, setOffset] = useState(0);
+	// const [offset, setOffset] = useState(0);
 	const [newOffset, setNewOffset] = useState(false);
 	const [newSearch, setNewSearch] = useState(false);
 	const [currentPage, setCurrentPage] = useState(1);
 	const [askForMore, setAskForMore] = useState(false);
 	const [filtered, setFiltered] = useState(false);
-
-	useEffect(() => {
-		fetchTypes().then((data) => {
-			setTypes(data.map((type) => type.name).concat(['All']));
-		});
-	}, []);
+	const offset = useRef(0);
 
 	useEffect(() => {
 		if (!allPokemons.length || newOffset) {
-			dispatch(getPokemons(offset)); // offset = 0
+			dispatch(getPokemons(offset.current)); // offset = 0
 			setNewOffset(false);
 		}
-	}, [dispatch, offset]);
+		console.log('Home rerender');
+	}, [dispatch, newOffset, pokemons]);
 
 	const handlePaginationNext = (currentPage) => {
 		setCurrentPage(currentPage);
 	};
 	const handleOffset = () => {
 		setAskForMore(false);
-		setOffset(offset + 40);
 		setNewOffset(true);
+		offset.current = offset.current + 40;
+		if (offset.current > 600) {
+			offset.current = 0;
+		}
 	};
 
 	return (
@@ -46,7 +44,6 @@ const Home = () => {
 			<Forms
 				setNewSearch={setNewSearch}
 				setCurrentPage={setCurrentPage}
-				types={types}
 				setFiltered={setFiltered}
 			/>
 

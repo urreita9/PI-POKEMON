@@ -48,7 +48,9 @@ const Cards = ({
 								<Card {...searchedPokemon} />
 							</Link>
 						</div>
-						<button onClick={() => setNewSearch(false)}>Show All</button>
+						<button onClick={() => setNewSearch(false)} className='form_button'>
+							Show All
+						</button>
 					</>
 				)
 			) : (

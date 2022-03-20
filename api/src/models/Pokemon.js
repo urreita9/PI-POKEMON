@@ -10,21 +10,28 @@ module.exports = (sequelize) => {
 				type: DataTypes.UUID,
 				defaultValue: DataTypes.UUIDV4,
 				primaryKey: true,
+				// type: DataTypes.INTEGER,
+				// autoIncrement: true,
+				// primaryKey: true,
+				// get() {
+				// 	const rawValue = this.getDataValue('id');
+				// 	return 'DB' + rawValue;
+				// },
 			},
 			name: {
 				type: DataTypes.STRING,
 				allowNull: false,
 				isUnique: true,
 			},
-			attack: { type: DataTypes.INTEGER },
-			hp: { type: DataTypes.INTEGER },
-			defense: { type: DataTypes.INTEGER },
-			speed: { type: DataTypes.INTEGER },
-			height: { type: DataTypes.INTEGER },
-			weight: { type: DataTypes.INTEGER },
+			attack: { type: DataTypes.INTEGER, defaultValue: null },
+			hp: { type: DataTypes.INTEGER, defaultValue: null },
+			defense: { type: DataTypes.INTEGER, defaultValue: null },
+			speed: { type: DataTypes.INTEGER, defaultValue: null },
+			height: { type: DataTypes.INTEGER, defaultValue: null },
+			weight: { type: DataTypes.INTEGER, defaultValue: null },
 			createdDb: { type: DataTypes.BOOLEAN, defaultValue: true },
-			imgDesktop: { type: DataTypes.STRING },
-			imgMobile: { type: DataTypes.STRING },
+			imgDesktop: { type: DataTypes.STRING, defaultValue: null },
+			imgMobile: { type: DataTypes.STRING, defaultValue: null },
 		},
 		{ logging: false, timestamps: false }
 	);

@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from 'react';
-import { useDispatch } from 'react-redux';
-import { postPokemons } from '../../redux/actions/actions';
+import React, { useState, useEffect, useRef } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useHistory } from 'react-router-dom';
+import { cleanPokemon, postPokemons } from '../../redux/actions/actions';
 import { fetchTypes, getPokemons } from '../../utils/utils';
 const initialState = {
 	name: '',
@@ -17,17 +18,21 @@ const initialState = {
 
 const Create = () => {
 	const dispatch = useDispatch();
+	const pokemon = useSelector((state) => state.pokemon);
 	const [form, setForm] = useState(initialState);
 	const [types, setTypes] = useState([]);
 	const [myTypes, setMyTypes] = useState([]);
 	const [offset, setOffset] = useState(0);
 	const [images, setImages] = useState([]);
+	const created = useRef(false);
+	const history = useHistory();
 	useEffect(() => {
+		// types array
 		fetchTypes().then((data) => {
 			setTypes(data.map((type) => type.name).concat(['All']));
 		});
+		// images array
 		getPokemons(offset).then((data) => {
-			// console.log(data);
 			setImages(
 				data
 					.filter((pokemon) => pokemon.createdDb === false)
@@ -37,9 +42,12 @@ const Create = () => {
 					}))
 			);
 		});
-	}, [offset]);
+		if (created.current) {
+			created.current = false;
+			history.push(`/pokemon/${pokemon.id}`);
+		}
+	}, [offset, pokemon]);
 
-	console.log(images);
 	const handleInputChange = (e) => {
 		if (e.target.name === 'types') {
 			if (myTypes.length === 2) return;
@@ -54,7 +62,10 @@ const Create = () => {
 	const handleSubmit = (e) => {
 		e.preventDefault();
 
-		dispatch(postPokemons({ ...form, types: myTypes }));
+		if (form.name.length) {
+			dispatch(postPokemons({ ...form, types: myTypes }));
+			created.current = true;
+		}
 		setForm(initialState);
 	};
 	const handleDeleteTypes = (type) => {
@@ -69,7 +80,7 @@ const Create = () => {
 					<input
 						type='text'
 						name='name'
-						value={form.name}
+						value={form.name || ''}
 						onChange={handleInputChange}
 						placeholder='Pikachu'
 					/>
@@ -80,7 +91,7 @@ const Create = () => {
 					<input
 						type='number'
 						name='attack'
-						value={form.attack}
+						value={form.attack || ''}
 						onChange={handleInputChange}
 						placeholder='53'
 					/>
@@ -91,7 +102,7 @@ const Create = () => {
 					<input
 						type='number'
 						name='defense'
-						value={form.defense}
+						value={form.defense || ''}
 						onChange={handleInputChange}
 						placeholder='67'
 					/>
@@ -101,8 +112,8 @@ const Create = () => {
 					<label>Strength: </label>
 					<input
 						type='number'
-						name='strength'
-						value={form.hp}
+						name='hp'
+						value={form.hp || ''}
 						onChange={handleInputChange}
 						placeholder='75'
 					/>
@@ -113,7 +124,7 @@ const Create = () => {
 					<input
 						type='number'
 						name='speed'
-						value={form.speed}
+						value={form.speed || ''}
 						onChange={handleInputChange}
 						placeholder='21'
 					/>
@@ -124,7 +135,7 @@ const Create = () => {
 					<input
 						type='number'
 						name='height'
-						value={form.height}
+						value={form.height || ''}
 						onChange={handleInputChange}
 						placeholder='210'
 					/>
@@ -135,7 +146,7 @@ const Create = () => {
 					<input
 						type='number'
 						name='weight'
-						value={form.weight}
+						value={form.weight || ''}
 						onChange={handleInputChange}
 						placeholder='18'
 					/>

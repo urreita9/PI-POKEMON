@@ -7,7 +7,6 @@ const Forms = ({
 	searchFromState,
 	setNewSearch,
 	setCurrentPage,
-	types,
 	setFiltered,
 }) => {
 	return (
@@ -16,11 +15,7 @@ const Forms = ({
 				searchFromState={searchFromState}
 				setNewSearch={setNewSearch}
 			/>
-			<FilterForm
-				setCurrentPage={setCurrentPage}
-				types={types}
-				setFiltered={setFiltered}
-			/>
+			<FilterForm setCurrentPage={setCurrentPage} setFiltered={setFiltered} />
 			<OrderForm setCurrentPage={setCurrentPage} />
 		</div>
 	);

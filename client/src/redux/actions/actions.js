@@ -28,7 +28,6 @@ export const getPokemons = (offset) => {
 
 export const postPokemons = (pokemon) => {
 	return async (dispatch) => {
-		console.log(pokemon);
 		const res = await fetch(`http://localhost:3001/pokemons`, {
 			method: 'POST',
 			headers: {
@@ -38,9 +37,24 @@ export const postPokemons = (pokemon) => {
 		});
 		const data = await res.json();
 		console.log(data);
-		dispatch({ type: POST_POKEMON, payload: data });
+		dispatch(getPokemonByIdFromApi(data.pokemon.id));
 	};
 };
+
+// export const postPokemons = (pokemon) => {
+// 	return async (dispatch) => {
+// 		const res = await fetch(`http://localhost:3001/pokemons`, {
+// 			method: 'POST',
+// 			headers: {
+// 				'Content-Type': 'application/json',
+// 			},
+// 			body: JSON.stringify(pokemon),
+// 		});
+// 		const data = await res.json();
+// 		// console.log(data);
+// 		dispatch({ type: POST_POKEMON, payload: data });
+// 	};
+// };
 
 export const getPokemonByNameFromApi = (name) => {
 	return async (dispatch) => {
@@ -82,6 +96,7 @@ export const getPokemonByNameFromState = (payload) => {
 };
 
 export const getPokemonByIdFromState = (payload) => {
+	console.log(payload);
 	return {
 		type: GET_POKEMON_BY_ID_FROM_STATE,
 		payload,

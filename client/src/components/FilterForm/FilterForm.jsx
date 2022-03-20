@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import {
 	filterAllAll,
@@ -6,14 +6,21 @@ import {
 	filterOriginalsCreatedAll,
 	filterOriginalsCreatedByType,
 } from '../../redux/actions/actions';
+import { fetchTypes } from '../../utils/utils';
 import Button from '../Button/Button';
 
-const FilterForm = ({ types, setCurrentPage, setFiltered }) => {
+const FilterForm = ({ setCurrentPage, setFiltered }) => {
 	const [form, setForm] = useState({
 		created: 'All',
 		type: 'All',
 	});
+	const [types, setTypes] = useState([]);
 	const dispatch = useDispatch();
+	useEffect(() => {
+		fetchTypes().then((data) => {
+			setTypes(data.map((type) => type.name).concat(['All']));
+		});
+	}, []);
 	const creation = ['All', 'Originals', 'Custom'];
 	const handleSubmit = (e) => {
 		e.preventDefault();
