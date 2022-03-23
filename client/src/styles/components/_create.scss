@@ -15,6 +15,15 @@
 				margin-left: 10px;
 				height: 30px;
 			}
+			.stroke {
+				font-size: 1em;
+
+				-webkit-text-stroke-width: 1px;
+				-webkit-text-stroke-color: black;
+			}
+			.cross {
+				color: red;
+			}
 		}
 
 		.pokeImg {
@@ -22,13 +31,34 @@
 			height: 50px;
 			cursor: pointer;
 		}
-		.pokeImgSelected {
-			width: 100px;
-			height: 100px;
+		.imgSelected_container {
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			.pokeImgSelected {
+				width: 100px;
+				height: 100px;
+			}
 		}
+
 		.form_imgs {
 			margin: 0 auto;
 			width: 90%;
+		}
+	}
+	.create_buttons {
+		display: flex;
+		align-items: center;
+		justify-content: space-around;
+		// flex-direction: column;
+		.getMore {
+			font-size: 1.5em;
+		}
+		.create {
+			color: #f40061;
+			-webkit-text-stroke-width: 1px;
+			-webkit-text-stroke-color: black;
+			letter-spacing: 3px;
 		}
 	}
 }

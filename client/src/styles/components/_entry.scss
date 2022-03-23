@@ -1,24 +1,141 @@
 .entry_wrapper {
 	width: 100vw;
 	height: 100vh;
-	background-size: cover;
-	background-repeat: no-repeat;
-	background-position: center;
+
 	display: flex;
 	align-items: center;
+	flex-direction: column;
 	justify-content: center;
+	overflow: hidden;
+	.logo_wrapper {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		background-size: contain;
+		background-repeat: no-repeat;
+		background-position: center;
+	}
+	.pikachu_container {
+		display: flex;
+		justify-content: center;
+		height: 450px;
+		margin: 0 auto;
+		.pikachu_gif_container {
+			display: flex;
+			align-items: center;
+			justify-content: flex-end;
+			flex-direction: column;
+			width: 10%;
+			.pikachu {
+				width: 300px;
+				height: 300px;
+				background-size: contain;
+				background-repeat: no-repeat;
+				background-position: center;
+			}
+		}
+		.bubble_container {
+			display: flex;
+			align-items: center;
+			justify-content: flex-start;
+			flex-direction: column;
+			.bubble {
+				width: 230px;
+				height: 370px;
+				background-size: contain;
+				background-repeat: no-repeat;
+				background-position: center;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				p {
+					color: #f40061;
+					-webkit-text-stroke-width: 1px;
+					-webkit-text-stroke-color: black;
+					transform: rotate(-10deg);
+					font-size: 40px;
+					margin-bottom: 10px;
+				}
+			}
+		}
+	}
+	a {
+		text-decoration: none;
+		margin-top: 40px;
+	}
+	.pikachuAnimated {
+		width: 200px;
+		position: absolute;
+		z-index: 1;
+		top: 40%;
+		// left: 0;
+		animation: run 5s linear normal infinite;
+		display: none;
+	}
+	@keyframes run {
+		0% {
+			left: -50px;
+		}
+		50% {
+			left: 50%;
+		}
+		100% {
+			left: calc(100% - 200px);
+		}
+	}
+	.charizardAnimated {
+		width: 200px;
+		position: absolute;
+		right: 300px;
+		bottom: 300px;
+
+		// left: 0;
+		animation: fly 7s linear normal infinite;
+		// animation-delay: 2s;
+		display: none;
+	}
+	@keyframes fly {
+		0% {
+			right: 50px;
+			bottom: 50px;
+		}
+		50% {
+			right: 50%;
+			bottom: 50%;
+		}
+		100% {
+			right: calc(100% - 200px);
+			bottom: calc(100% - 200px);
+		}
+	}
+	.squirtleAnimated {
+		width: 100px;
+		position: absolute;
+		bottom: 100px;
+		right: 300px;
+		display: none;
+	}
+	.pokeAnimated {
+		width: 100px;
+		position: absolute;
+		top: 100px;
+		right: 300px;
+		display: none;
+	}
+	.poke1Animated {
+		width: 200px;
+		position: absolute;
+		top: 60%;
+		left: 200px;
+		display: none;
+	}
 }
 
 .entry_btn {
-	font-weight: 600;
-	border: solid 2px black;
-	outline: 0;
-	padding: 1rem 4rem;
-	font-size: 1.5rem;
-	letter-spacing: 0.08rem;
-	background-color: white;
-	border-radius: 0.35rem;
-	position: relative;
-
+	font-family: inherit;
+	font-size: 3em;
+	padding: 10px 25px;
+	background: transparent;
 	cursor: pointer;
+	border: none;
 }

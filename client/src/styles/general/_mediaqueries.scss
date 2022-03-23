@@ -2,7 +2,16 @@ $small: 300px;
 $medium: 900px;
 
 @media screen and (min-width: $medium) {
-	//do Smth
+	.entry_wrapper {
+		.pikachuAnimated,
+		.charizardAnimated,
+		.squirtleAnimated,
+		.pokeAnimated,
+		.poke1Animated {
+			display: block;
+		}
+	}
+
 	.cards_container {
 		display: grid;
 		grid-template-columns: repeat(3, 1fr);
@@ -31,6 +40,10 @@ $medium: 900px;
 		width: 400px;
 	}
 	.detail_container {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		margin: 0 auto;
 		h2 {
 			font-size: 5em;
 			letter-spacing: 6px;
@@ -40,6 +53,9 @@ $medium: 900px;
 				width: 500px;
 				height: 500px;
 			}
+		}
+		.imageDeco {
+			display: block;
 		}
 	}
 	.desktop {

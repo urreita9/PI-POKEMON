@@ -1,7 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getPokemons } from '../../redux/actions/actions';
-import { fetchTypes } from '../../utils/utils';
 import Cards from '../Cards/Cards';
 import Forms from '../Forms/Forms';
 import Pagination from '../Pagination/Pagination';
@@ -11,7 +10,6 @@ const Home = () => {
 	const allPokemons = useSelector((state) => state.pokemons);
 	const pokemons = useSelector((state) => state.filteredPokemons);
 
-	// const [offset, setOffset] = useState(0);
 	const [newOffset, setNewOffset] = useState(false);
 	const [newSearch, setNewSearch] = useState(false);
 	const [currentPage, setCurrentPage] = useState(1);
@@ -20,12 +18,12 @@ const Home = () => {
 	const offset = useRef(0);
 
 	useEffect(() => {
-		if (!allPokemons.length || newOffset) {
+		if (!allPokemons.length || allPokemons.length === 1 || newOffset) {
 			dispatch(getPokemons(offset.current)); // offset = 0
 			setNewOffset(false);
 		}
 		console.log('Home rerender');
-	}, [dispatch, newOffset, pokemons]);
+	}, [dispatch, newOffset, allPokemons.length]);
 
 	const handlePaginationNext = (currentPage) => {
 		setCurrentPage(currentPage);

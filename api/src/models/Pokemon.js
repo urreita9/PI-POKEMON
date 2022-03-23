@@ -10,13 +10,6 @@ module.exports = (sequelize) => {
 				type: DataTypes.UUID,
 				defaultValue: DataTypes.UUIDV4,
 				primaryKey: true,
-				// type: DataTypes.INTEGER,
-				// autoIncrement: true,
-				// primaryKey: true,
-				// get() {
-				// 	const rawValue = this.getDataValue('id');
-				// 	return 'DB' + rawValue;
-				// },
 			},
 			name: {
 				type: DataTypes.STRING,

@@ -6,7 +6,7 @@ export const GET_POKEMON_BY_ID_FROM_API = 'GET_POKEMON_BY_ID_FROM_API';
 export const POST_POKEMON = 'POST_POKEMON';
 export const FILTER_ALL_ALL = 'FILTER_ALL_ALL';
 export const FILTER_ALL_TYPE = 'FILTER_ALL_TYPE';
-export const FILTER_ORIGINALS_CREATED_ALL = 'FILTER_ORIGINALS_ALL';
+export const FILTER_ORIGINALS_CREATED_ALL = 'FILTER_ORIGINALS_CREATED_ALL';
 export const FILTER_ORIGINALS_CREATED_BY_TYPE =
 	'FILTER_ORIGINALS_CREATED_BY_TYPE';
 export const ORDER_NAME_A_Z = 'ORDER_NAME_A_Z';
@@ -26,21 +26,6 @@ export const getPokemons = (offset) => {
 	};
 };
 
-export const postPokemons = (pokemon) => {
-	return async (dispatch) => {
-		const res = await fetch(`http://localhost:3001/pokemons`, {
-			method: 'POST',
-			headers: {
-				'Content-Type': 'application/json',
-			},
-			body: JSON.stringify(pokemon),
-		});
-		const data = await res.json();
-		console.log(data);
-		dispatch(getPokemonByIdFromApi(data.pokemon.id));
-	};
-};
-
 // export const postPokemons = (pokemon) => {
 // 	return async (dispatch) => {
 // 		const res = await fetch(`http://localhost:3001/pokemons`, {
@@ -51,10 +36,27 @@ export const postPokemons = (pokemon) => {
 // 			body: JSON.stringify(pokemon),
 // 		});
 // 		const data = await res.json();
-// 		// console.log(data);
-// 		dispatch({ type: POST_POKEMON, payload: data });
+// 		console.log(data);
+// 		dispatch(getPokemonByIdFromApi(data.pokemon.id));
 // 	};
 // };
+
+export const postPokemons = (pokemon) => {
+	return async (dispatch) => {
+		console.log('action post poekmon', pokemon);
+		const res = await fetch(`http://localhost:3001/pokemons`, {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+			},
+			body: JSON.stringify(pokemon),
+		});
+		const data = await res.json();
+		console.log('action post poekmon data', data);
+		// console.log(data);
+		dispatch({ type: POST_POKEMON, payload: data });
+	};
+};
 
 export const getPokemonByNameFromApi = (name) => {
 	return async (dispatch) => {
@@ -62,6 +64,7 @@ export const getPokemonByNameFromApi = (name) => {
 			const res = await fetch(`http://localhost:3001/pokemons?name=${name}`);
 			const data = await res.json();
 			const { msg } = data;
+			console.log(data);
 			if (msg) {
 				return msg;
 			}

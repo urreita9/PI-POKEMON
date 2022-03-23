@@ -28,6 +28,7 @@ const Cards = ({
 	let showThisPoks = pokemons.slice(firstPokemon, lastPokemon);
 
 	const skeletonArr = new Array(limitPerPage).fill(null);
+	console.log('cards poks', pokemons);
 
 	return (
 		<>

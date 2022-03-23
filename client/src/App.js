@@ -15,13 +15,17 @@ import Socials from './components/Socials/Socials';
 function App() {
 	return (
 		<Router>
-			<Nav />
 			<Switch>
 				<Route exact path='/' component={Entry} />
-				<Route exact path='/home' component={Home} />
-				<Route exact path='/pokemon/:id' component={Detail} />
-				<Route exact path='/create' component={Create} />
-				<Redirect to='/home' />
+				<Route>
+					<Nav />
+					<Switch>
+						<Route exact path='/home' component={Home} />
+						<Route exact path='/pokemon/:id' component={Detail} />
+						<Route exact path='/create' component={Create} />
+						<Redirect to='/home' />
+					</Switch>
+				</Route>
 			</Switch>
 			<Socials className='mobile' />
 		</Router>

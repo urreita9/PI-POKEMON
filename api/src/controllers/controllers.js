@@ -7,7 +7,7 @@ const POKEMON_API_TYPES = 'https://pokeapi.co/api/v2/type';
 const getPokemons = async (req, res) => {
 	try {
 		const { name, offset } = req.query;
-		console.log(name);
+		// console.log(name);
 		if (name) {
 			const pokeApiByName = await fetchOneByOne(`${POKEMON_API_ALL}/${name}`);
 
@@ -33,7 +33,7 @@ const getPokemons = async (req, res) => {
 				},
 			],
 		});
-		// console.log(pokeApiData);
+
 		const newArr = pokeDbData.map((pokemon) => {
 			const typesStringArr = pokemon.dataValues.types.map((p) => p.name);
 			return {
@@ -45,12 +45,6 @@ const getPokemons = async (req, res) => {
 		const allPokemonsData = pokeApiData.concat(newArr);
 
 		return res.status(200).json(allPokemonsData);
-
-		// const pokemon = allPokemonsData.find((p) => p.name === name);
-		// if (!pokemon)
-		// 	return res.status(404).json({ msg: 'Pokemon does not exist' });
-
-		// res.status(200).json(pokemon);
 	} catch (error) {
 		console.log(error);
 		res.status(500).send({ msg: 'Please contact administrator' });
@@ -65,6 +59,7 @@ const getPokemonById = async (req, res) => {
 			const pokeApiData = await fetchOneByOne(`${POKEMON_API_ALL}/${id}`);
 
 			if (pokeApiData) return res.status(200).json(pokeApiData);
+			return res.status(400).json({ msg: 'Pokemon doesnt exist' });
 		}
 
 		const pokeDbData = await Pokemon.findByPk(id, {
@@ -83,6 +78,7 @@ const getPokemonById = async (req, res) => {
 		dataValues.types = dataValues.types.map((t) => t.name);
 
 		if (pokeDbData) return res.status(200).json(dataValues);
+		res.status(400).json({ msg: 'Pokemon doesnt exist' });
 	} catch (error) {
 		console.log(error);
 		return res.status(404).json({ msg: 'Pokemon doesnt exist' });
@@ -104,9 +100,10 @@ const postPokemons = async (req, res) => {
 			imgMobile,
 		} = req.body;
 		if (!name) return res.status(400).json({ msg: 'Name is mandatory' });
+		const lowerName = name.toLowerCase();
 		const [pokemon, created] = await Pokemon.findOrCreate({
 			where: {
-				name,
+				name: lowerName,
 			},
 			defaults: {
 				attack,
@@ -124,7 +121,7 @@ const postPokemons = async (req, res) => {
 			types.map((name) => Type.findOne({ where: { name } }))
 		);
 		pokemon.addType(matchTypes);
-
+		// console.log(pokemon);
 		res.status(201).json({ pokemon, created });
 	} catch (error) {
 		console.log(error);

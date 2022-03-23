@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
 	getPokemonByNameFromApi,
@@ -6,11 +6,18 @@ import {
 } from '../../redux/actions/actions';
 import { searchFromState } from '../../utils/utils';
 import Button from '../Button/Button';
+import Modal from '../Modal/Modal';
 
 const SearchForm = ({ setNewSearch }) => {
 	const dispatch = useDispatch();
 	const pokemons = useSelector((state) => state.pokemons);
 	const [name, setName] = useState('');
+	const [error, setError] = useState(false);
+	useEffect(() => {
+		if (error) {
+			setNewSearch(false);
+		}
+	}, [error]);
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
@@ -21,11 +28,16 @@ const SearchForm = ({ setNewSearch }) => {
 			setNewSearch(true);
 			return;
 		}
-		dispatch(getPokemonByNameFromApi(name.toLowerCase()));
+		dispatch(getPokemonByNameFromApi(name.toLowerCase())).then((data) => {
+			if (data) {
+				setError(true);
+			}
+		});
 		setNewSearch(true);
 		setName('');
 	};
 	const handleInputChange = (e) => {
+		setError(false);
 		setName(e.target.value);
 	};
 
@@ -37,6 +49,7 @@ const SearchForm = ({ setNewSearch }) => {
 				value={name}
 				onChange={handleInputChange}
 			/>
+			{error && <Modal text='Pokemon doesnt exist' setError={setError} />}
 			<Button type={'submit'} className='form_button' text='Search' />
 		</form>
 	);
