@@ -1,11 +1,13 @@
 import React from 'react';
 
-const Modal = ({ text, setError }) => {
+const Modal = ({ text, handleError, loading }) => {
 	return (
 		<div
 			className='modal_container'
 			onClick={() => {
-				setError(false);
+				if (!loading) {
+					handleError();
+				}
 			}}
 		>
 			<div className='modal_wrapper'>
@@ -14,7 +16,7 @@ const Modal = ({ text, setError }) => {
 					style={{ backgroundImage: 'url(/assets/gif.png)' }}
 				></div>
 				<div>
-					<p>{text}</p>
+					<p style={{ color: '#24d84c' }}>{text}</p>
 				</div>
 			</div>
 		</div>

@@ -1,7 +1,11 @@
 export const fetchTypes = async () => {
-	const typesFetch = await fetch('http://localhost:3001/types');
-	const types = await typesFetch.json();
-	return types;
+	try {
+		const typesFetch = await fetch('http://localhost:3001/types');
+		const types = await typesFetch.json();
+		return types;
+	} catch (error) {
+		console.log(error);
+	}
 };
 
 export const searchFromState = (arg, value, pokemons) => {
@@ -14,10 +18,14 @@ export const searchFromState = (arg, value, pokemons) => {
 };
 
 export const getPokemons = async (offset) => {
-	const res = await fetch(
-		`http://localhost:3001/pokemons?offset=${offset}&limit=40`
-	);
-	const data = await res.json();
+	try {
+		const res = await fetch(
+			`http://localhost:3001/pokemons?offset=${offset}&limit=40`
+		);
+		const data = await res.json();
 
-	return data;
+		return data;
+	} catch (error) {
+		console.log(error);
+	}
 };

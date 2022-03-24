@@ -121,7 +121,6 @@ const postPokemons = async (req, res) => {
 			types.map((name) => Type.findOne({ where: { name } }))
 		);
 		pokemon.addType(matchTypes);
-		// console.log(pokemon);
 		res.status(201).json({ pokemon, created });
 	} catch (error) {
 		console.log(error);

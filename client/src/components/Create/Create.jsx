@@ -3,6 +3,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { postPokemons } from '../../redux/actions/actions';
 import { fetchTypes, getPokemons } from '../../utils/utils';
+import Input from '../input/Input';
+import Modal from '../Modal/Modal';
 const initialState = {
 	name: '',
 	attack: 50,
@@ -25,12 +27,13 @@ const Create = () => {
 	const [myTypes, setMyTypes] = useState([]);
 	const [offset, setOffset] = useState(0);
 	const [images, setImages] = useState([]);
+	const [loading, setLoading] = useState(true);
 	const created = useRef(false);
 	const clickOnCreate = useRef(false);
+	const pokeNames = useRef([]);
 	const history = useHistory();
 
 	useEffect(() => {
-		// console.log('CREATE Use effect');
 		// types array
 		if (!types.length) {
 			fetchTypes().then((data) => {
@@ -48,6 +51,11 @@ const Create = () => {
 						imgMobile: pokemon.imgMobile,
 					}))
 			);
+			pokeNames.current = [
+				...pokeNames.current,
+				...data.map((poke) => poke.name),
+			];
+			setLoading(false);
 		});
 	}, [offset, types.length]);
 
@@ -70,6 +78,7 @@ const Create = () => {
 			});
 			return;
 		} else if (e.target.name === 'types') {
+			if (e.target.value === myTypes[0]) return;
 			if (myTypes.length === 2) return;
 			setMyTypes([...myTypes, e.target.value]);
 			return;
@@ -105,6 +114,20 @@ const Create = () => {
 	};
 	const handleSubmit = (e) => {
 		e.preventDefault();
+		if (form.name === '' || !form.name) {
+			setErrors({
+				...errors,
+				name: 'Name is Mandatory',
+			});
+			return;
+		}
+		if (searchForName(form.name)) {
+			setErrors({
+				...errors,
+				name: 'Pokemon already exists. Try with another name.',
+			});
+			return;
+		}
 		if (clickOnCreate.current) {
 			dispatch(postPokemons({ ...form, types: myTypes }));
 			created.current = true;
@@ -114,101 +137,97 @@ const Create = () => {
 		setMyTypes(myTypes.filter((t) => t !== type));
 	};
 
+	const searchForName = (name) => {
+		const findName = pokeNames.current.find((poke) => poke === name);
+		if (findName) return true;
+		return false;
+	};
+
 	return (
 		<div className='create'>
+			{loading && <Modal text='Hang in there...' />}
 			<form onSubmit={handleSubmit} className='form-create'>
-				<div className='input_container'>
-					<label>Name: </label>
-					<input
-						type='text'
-						name='name'
-						value={form.name || ''}
-						onChange={handleInputChange}
-						placeholder='Pikachu'
-					/>
-					{errors.name && <span>Name is mandatory</span>}
-				</div>
+				<Input
+					label='Name: '
+					type='text'
+					name='name'
+					value={form.name}
+					handleInputChange={handleInputChange}
+					placeholder='Pikachu'
+					error={errors.name}
+				/>
 
-				<div className='input_container'>
-					<label>Attack: </label>
-					<input
-						type='range'
-						name='attack'
-						min={1}
-						max={300}
-						value={form.attack}
-						onChange={handleInputChange}
-						placeholder='53'
-					/>
-					{<span>{form.attack}</span>}
-				</div>
+				<Input
+					label='Attack: '
+					type='range'
+					name='attack'
+					min={1}
+					max={300}
+					value={form.attack}
+					handleInputChange={handleInputChange}
+					placeholder='53'
+					showValue={true}
+				/>
 
-				<div className='input_container'>
-					<label>Defense: </label>
-					<input
-						type='range'
-						name='defense'
-						min={1}
-						max={300}
-						value={form.defense}
-						onChange={handleInputChange}
-						placeholder='67'
-					/>
-					{<span>{form.defense}</span>}
-				</div>
+				<Input
+					label='Defense: '
+					type='range'
+					name='defense'
+					min={1}
+					max={300}
+					value={form.defense}
+					handleInputChange={handleInputChange}
+					placeholder='67'
+					showValue={true}
+				/>
 
-				<div className='input_container'>
-					<label>Strength: </label>
-					<input
-						type='range'
-						name='hp'
-						min={1}
-						max={300}
-						value={form.hp}
-						onChange={handleInputChange}
-						placeholder='75'
-					/>
-					{<span>{form.hp}</span>}
-				</div>
+				<Input
+					label='Strength: '
+					type='range'
+					name='hp'
+					min={1}
+					max={300}
+					value={form.hp}
+					handleInputChange={handleInputChange}
+					placeholder='67'
+					showValue={true}
+				/>
 
-				<div className='input_container'>
-					<label>Speed: </label>
-					<input
-						type='range'
-						name='speed'
-						min={1}
-						max={300}
-						value={form.speed}
-						onChange={handleInputChange}
-						placeholder='21'
-					/>
-					{<span>{form.speed}</span>}
-				</div>
+				<Input
+					label='Speed: '
+					type='range'
+					name='speed'
+					min={1}
+					max={300}
+					value={form.speed}
+					handleInputChange={handleInputChange}
+					placeholder='67'
+					showValue={true}
+				/>
 
-				<div className='input_container'>
-					<label>Height: </label>
-					<input
-						type='text'
-						name='height'
-						value={form.height || ''}
-						onChange={handleInputChange}
-						placeholder='210'
-					/>
-					{errors.height && <span>{errors.height}</span>}
-				</div>
+				<Input
+					label='Height: '
+					type='text'
+					name='height'
+					min={1}
+					max={300}
+					value={form.height}
+					handleInputChange={handleInputChange}
+					placeholder='170'
+					error={errors.height}
+				/>
 
-				<div className='input_container'>
-					<label>Weight: </label>
-					<input
-						type='text'
-						name='weight'
-						value={form.weight || ''}
-						onChange={handleInputChange}
-						placeholder='18'
-					/>
-
-					{errors.weight && <span>{errors.weight}</span>}
-				</div>
+				<Input
+					label='Weight: '
+					type='text'
+					name='weight'
+					min={1}
+					max={300}
+					value={form.weight}
+					handleInputChange={handleInputChange}
+					placeholder='170'
+					error={errors.weight}
+				/>
 
 				<div className='input_container'>
 					<label>Types (2 max): </label>
@@ -220,20 +239,19 @@ const Create = () => {
 						))}
 					</select>
 				</div>
-				{
-					// myTypes.length &&
-					myTypes.map((type) => (
-						<div key={type} className='input_container'>
-							<span className={`${type} stroke`}>{type}</span>
-							<button
-								onClick={() => handleDeleteTypes(type)}
-								className='form_button cross stroke'
-							>
-								X
-							</button>
-						</div>
-					))
-				}
+
+				{myTypes.map((type) => (
+					<div key={type} className='input_container'>
+						<span className={`${type} stroke`}>{type}</span>
+						<button
+							onClick={() => handleDeleteTypes(type)}
+							className='form_button cross stroke'
+						>
+							X
+						</button>
+					</div>
+				))}
+
 				{form.imgDesktop && (
 					<div className='imgSelected_container'>
 						<img
@@ -268,6 +286,7 @@ const Create = () => {
 						onClick={() => {
 							setOffset(offset + 40);
 							clickOnCreate.current = false;
+							setLoading(true);
 						}}
 						className='form_button getMore'
 					>
@@ -278,20 +297,12 @@ const Create = () => {
 						type='submit'
 						className='form_button create'
 						onClick={() => {
-							if (!form.name.length) {
-								setErrors({
-									...errors,
-									name: 'Name is Mandatory',
-								});
+							if (errors.name) {
 								return;
+							} else {
+								clickOnCreate.current = true;
 							}
-							if (errors.weight || errors.height) {
-								return;
-							}
-							// console.log('click');
-							clickOnCreate.current = true;
 						}}
-						// disabled={!form.name.length ? true : false}
 					>
 						Create Pokemon!
 					</button>

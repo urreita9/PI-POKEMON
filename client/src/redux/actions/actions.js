@@ -1,4 +1,5 @@
 export const GET_POKEMONS = 'GET_POKEMONS';
+// export const GET_POKEMONS_ERROR = 'GET_POKEMONS_ERROR';
 export const GET_POKEMON_BY_NAME_FROM_API = 'GET_POKEMON_BY_NAME_FROM_API';
 export const GET_POKEMON_BY_NAME_FROM_STATE = 'GET_POKEMON_BY_NAME_FROM_STATE';
 export const GET_POKEMON_BY_ID_FROM_STATE = 'GET_POKEMON_BY_ID_FROM_STATE';
@@ -14,47 +15,40 @@ export const ORDER_NAME_Z_A = 'ORDER_NAME_Z_A';
 export const ORDER_STRENGTH_W_F = 'ORDER_STRENGTH_W_F';
 export const ORDER_STRENGTH_S_F = 'ORDER_STRENGTH_S_F';
 export const CLEAN_POKEMON = 'CLEAN_POKEMON';
+// export const CLEAN_ERROR = 'CLEAN_ERROR';
 
 export const getPokemons = (offset) => {
 	return async (dispatch) => {
-		const res = await fetch(
-			`http://localhost:3001/pokemons?offset=${offset}&limit=40`
-		);
-		const data = await res.json();
+		try {
+			const res = await fetch(
+				`http://localhost:3001/pokemons?offset=${offset}&limit=40`
+			);
+			const data = await res.json();
 
-		dispatch({ type: GET_POKEMONS, payload: data });
+			dispatch({ type: GET_POKEMONS, payload: data });
+		} catch (error) {
+			console.log(error);
+			// dispatch({ type: GET_POKEMONS_ERROR, payload: true });
+		}
 	};
 };
 
-// export const postPokemons = (pokemon) => {
-// 	return async (dispatch) => {
-// 		const res = await fetch(`http://localhost:3001/pokemons`, {
-// 			method: 'POST',
-// 			headers: {
-// 				'Content-Type': 'application/json',
-// 			},
-// 			body: JSON.stringify(pokemon),
-// 		});
-// 		const data = await res.json();
-// 		console.log(data);
-// 		dispatch(getPokemonByIdFromApi(data.pokemon.id));
-// 	};
-// };
-
 export const postPokemons = (pokemon) => {
 	return async (dispatch) => {
-		console.log('action post poekmon', pokemon);
-		const res = await fetch(`http://localhost:3001/pokemons`, {
-			method: 'POST',
-			headers: {
-				'Content-Type': 'application/json',
-			},
-			body: JSON.stringify(pokemon),
-		});
-		const data = await res.json();
-		console.log('action post poekmon data', data);
-		// console.log(data);
-		dispatch({ type: POST_POKEMON, payload: data });
+		try {
+			const res = await fetch(`http://localhost:3001/pokemons`, {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+				},
+				body: JSON.stringify(pokemon),
+			});
+			const data = await res.json();
+
+			dispatch({ type: POST_POKEMON, payload: data });
+		} catch (error) {
+			console.log(error);
+		}
 	};
 };
 
@@ -165,3 +159,10 @@ export const cleanPokemon = () => {
 		payload: {},
 	};
 };
+
+// export const cleanError = () => {
+// 	return {
+// 		type: CLEAN_ERROR,
+// 		payload: false,
+// 	};
+// };

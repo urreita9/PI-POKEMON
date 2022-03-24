@@ -42,7 +42,7 @@ const Entry = () => {
 							className='bubble'
 							style={{ backgroundImage: 'url(/assets/bubble.png)' }}
 						>
-							<p>Pika home!</p>
+							<p>Home sweet home!</p>
 						</div>
 					</Link>
 				</div>

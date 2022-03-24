@@ -9,7 +9,7 @@ const Home = () => {
 	const dispatch = useDispatch();
 	const allPokemons = useSelector((state) => state.pokemons);
 	const pokemons = useSelector((state) => state.filteredPokemons);
-
+	// const error = useSelector((state) => state.error);
 	const [newOffset, setNewOffset] = useState(false);
 	const [newSearch, setNewSearch] = useState(false);
 	const [currentPage, setCurrentPage] = useState(1);
@@ -22,7 +22,6 @@ const Home = () => {
 			dispatch(getPokemons(offset.current)); // offset = 0
 			setNewOffset(false);
 		}
-		console.log('Home rerender');
 	}, [dispatch, newOffset, allPokemons.length]);
 
 	const handlePaginationNext = (currentPage) => {
@@ -53,6 +52,7 @@ const Home = () => {
 				askForMore={askForMore}
 				newSearch={newSearch}
 				setNewSearch={setNewSearch}
+				setFiltered={setFiltered}
 			/>
 			{!newSearch && (
 				<Pagination

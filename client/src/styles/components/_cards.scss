@@ -12,4 +12,25 @@
 		margin-top: 10px;
 		text-decoration: none;
 	}
+	.no_pokemons_container {
+		margin: 20px auto;
+		text-align: center;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+		grid-column: 1/4;
+		grid-row: 1;
+
+		.no_pokemons_text {
+			color: black;
+		}
+		.show_all {
+			font-size: 80px;
+			color: #f40061;
+			-webkit-text-stroke-width: 1px;
+			-webkit-text-stroke-color: black;
+			letter-spacing: 5px;
+		}
+	}
 }

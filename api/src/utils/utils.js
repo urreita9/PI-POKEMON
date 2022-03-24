@@ -7,6 +7,16 @@ const fetch = async (url) => {
 	return results;
 };
 
+const fetchPokeApi = async (url) => {
+	const data = await fetch(url);
+
+	const allPokemons = await Promise.all(
+		data.map(({ url }) => fetchOneByOne(url))
+	);
+
+	return allPokemons;
+};
+
 const fetchOneByOne = async (url) => {
 	try {
 		const { data } = await axios.get(url);
@@ -41,16 +51,6 @@ const fetchOneByOne = async (url) => {
 	} catch (error) {
 		return null;
 	}
-};
-
-const fetchPokeApi = async (url) => {
-	const data = await fetch(url);
-
-	const allPokemons = await Promise.all(
-		data.map(({ url }) => fetchOneByOne(url))
-	);
-
-	return allPokemons;
 };
 
 module.exports = { fetchPokeApi, fetch, fetchOneByOne };

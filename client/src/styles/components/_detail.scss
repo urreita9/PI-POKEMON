@@ -2,6 +2,17 @@
 // 	font-family: comic;
 // 	src: url('../../font/BEST\ FRIENDS.OTF');
 // }
+.loading_container {
+	width: 100%;
+	height: 100%;
+	background-color: black;
+	position: absolute;
+	z-index: 99;
+	top: 0;
+	left: 0;
+	overflow: hidden;
+}
+
 .detail_container {
 	font-family: comic;
 	text-align: center;
@@ -11,7 +22,7 @@
 	color: #f40061;
 	-webkit-text-stroke-width: 1px;
 	-webkit-text-stroke-color: black;
-	font-size: 20px;
+	// font-size: 20px;
 
 	h2 {
 		font-size: 55px;
