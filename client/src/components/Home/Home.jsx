@@ -13,8 +13,8 @@ const Home = () => {
 	const [newOffset, setNewOffset] = useState(false);
 	const [newSearch, setNewSearch] = useState(false);
 	const [currentPage, setCurrentPage] = useState(1);
-	const [askForMore, setAskForMore] = useState(false);
 	const [filtered, setFiltered] = useState(false);
+	const [askForMore, setAskForMore] = useState(false);
 	const offset = useRef(0);
 
 	useEffect(() => {

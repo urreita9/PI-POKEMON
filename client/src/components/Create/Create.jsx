@@ -21,13 +21,13 @@ const initialState = {
 const Create = () => {
 	const dispatch = useDispatch();
 	const pokemon = useSelector((state) => state.pokemon);
-	const [form, setForm] = useState(initialState);
-	const [errors, setErrors] = useState(initialState);
-	const [types, setTypes] = useState([]);
-	const [myTypes, setMyTypes] = useState([]);
-	const [offset, setOffset] = useState(0);
-	const [images, setImages] = useState([]);
-	const [loading, setLoading] = useState(true);
+	const [form, setForm] = useState(initialState); //form state
+	const [errors, setErrors] = useState(initialState); // errors
+	const [types, setTypes] = useState([]); //display all types for select
+	const [offset, setOffset] = useState(0); //offset for fetching images
+	const [images, setImages] = useState([]); // array of images
+	const [loading, setLoading] = useState(true); // boolean for modal display
+
 	const created = useRef(false);
 	const clickOnCreate = useRef(false);
 	const pokeNames = useRef([]);
@@ -78,9 +78,13 @@ const Create = () => {
 			});
 			return;
 		} else if (e.target.name === 'types') {
-			if (e.target.value === myTypes[0]) return;
-			if (myTypes.length === 2) return;
-			setMyTypes([...myTypes, e.target.value]);
+			// if (e.target.value === myTypes[0]) return;
+			// if (myTypes.length === 2) return;
+			// setMyTypes([...myTypes, e.target.value]);
+			// return;
+			if (e.target.value === form.types[0]) return;
+			if (form.types.length === 2) return;
+			setForm({ ...form, types: [...form.types, e.target.value] });
 			return;
 		} else {
 			if (e.target.value === '') {
@@ -114,7 +118,7 @@ const Create = () => {
 	};
 	const handleSubmit = (e) => {
 		e.preventDefault();
-		if (form.name === '' || !form.name) {
+		if (form.name === '' || !form.name || !form.name.trim().length) {
 			setErrors({
 				...errors,
 				name: 'Name is Mandatory',
@@ -129,12 +133,15 @@ const Create = () => {
 			return;
 		}
 		if (clickOnCreate.current) {
-			dispatch(postPokemons({ ...form, types: myTypes }));
+			dispatch(postPokemons(form));
 			created.current = true;
 		}
 	};
 	const handleDeleteTypes = (type) => {
-		setMyTypes(myTypes.filter((t) => t !== type));
+		setForm({
+			...form,
+			types: form.types.filter((t) => t !== type),
+		});
 	};
 
 	const searchForName = (name) => {
@@ -145,7 +152,7 @@ const Create = () => {
 
 	return (
 		<div className='create'>
-			{loading && <Modal text='Hang in there...' />}
+			{loading && <Modal text='Hang in there...' loading={true} />}
 			<form onSubmit={handleSubmit} className='form-create'>
 				<Input
 					label='Name: '
@@ -240,7 +247,7 @@ const Create = () => {
 					</select>
 				</div>
 
-				{myTypes.map((type) => (
+				{form.types.map((type) => (
 					<div key={type} className='input_container'>
 						<span className={`${type} stroke`}>{type}</span>
 						<button

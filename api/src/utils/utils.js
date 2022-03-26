@@ -16,7 +16,6 @@ const fetchPokeApi = async (url) => {
 
 	return allPokemons;
 };
-
 const fetchOneByOne = async (url) => {
 	try {
 		const { data } = await axios.get(url);
@@ -49,7 +48,7 @@ const fetchOneByOne = async (url) => {
 			createdDb: false,
 		};
 	} catch (error) {
-		return null;
+		return error;
 	}
 };
 
