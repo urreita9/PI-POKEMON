@@ -67,9 +67,9 @@ const getPokemonById = async (req, res) => {
 				{
 					model: Type,
 					attributes: ['name'],
-					through: {
-						attributes: [],
-					},
+					// through: {
+					// 	attributes: [],
+					// },
 				},
 			],
 		});
@@ -80,8 +80,7 @@ const getPokemonById = async (req, res) => {
 		if (pokeDbData) return res.status(200).json(dataValues);
 		res.status(400).json({ msg: 'Pokemon doesnt exist' });
 	} catch (error) {
-		console.log(error);
-		return res.status(404).json({ msg: 'Pokemon doesnt exist' });
+		res.status(400).json({ msg: 'Pokemon doesnt exist', error });
 	}
 };
 
@@ -123,7 +122,7 @@ const postPokemons = async (req, res) => {
 		pokemon.addType(matchTypes);
 		res.status(201).json({ pokemon, created });
 	} catch (error) {
-		console.log(error);
+		res.send(error);
 	}
 };
 
@@ -144,7 +143,7 @@ const getPokemonTypes = async (req, res) => {
 		const typesFromDb = await Type.findAll();
 		res.status(200).json(typesFromDb);
 	} catch (error) {
-		console.log(error);
+		res.send(error);
 	}
 };
 
