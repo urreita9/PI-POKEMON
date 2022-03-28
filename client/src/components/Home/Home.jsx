@@ -19,7 +19,7 @@ const Home = () => {
 	const offset = useRef(0);
 
 	useEffect(() => {
-		if (!allPokemons.length || newOffset) {
+		if (!allPokemons.length || allPokemons.length === 1 || newOffset) {
 			dispatch(getPokemons(offset.current)).then((data) => {
 				if (data) {
 					setError({ active: true, msg: data.msg });
