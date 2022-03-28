@@ -7,7 +7,6 @@ const POKEMON_API_TYPES = 'https://pokeapi.co/api/v2/type';
 const getPokemons = async (req, res) => {
 	try {
 		const { name, offset } = req.query;
-		// console.log(name);
 		if (name) {
 			const pokeApiByName = await fetchOneByOne(`${POKEMON_API_ALL}/${name}`);
 
@@ -16,9 +15,8 @@ const getPokemons = async (req, res) => {
 
 			if (pokeDbByName) return res.status(200).json(pokeDbByName);
 			return res.status(400).json({ msg: 'Pokemon doesnt exist' });
-			// return res.sendStatus(400);
 		}
-		//fetch all pokemons from pokeApi and DB
+
 		const pokeApiData = await fetchPokeApi(
 			`${POKEMON_API_ALL}?offset=${offset}&limit=40`
 		);
@@ -46,8 +44,7 @@ const getPokemons = async (req, res) => {
 
 		return res.status(200).json(allPokemonsData);
 	} catch (error) {
-		console.log(error);
-		res.status(500).send({ msg: 'Please contact administrator' });
+		res.status(400).send(error);
 	}
 };
 
@@ -67,9 +64,6 @@ const getPokemonById = async (req, res) => {
 				{
 					model: Type,
 					attributes: ['name'],
-					// through: {
-					// 	attributes: [],
-					// },
 				},
 			],
 		});

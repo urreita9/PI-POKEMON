@@ -34,7 +34,10 @@ describe('Pokemon routes', () => {
 			}));
 		it('if name doesnt exist, sends error msg', () =>
 			agent.get('/pokemons?name=noExist').then((res) => {
-				expect(res._body.msg).to.equal('Pokemon doesnt exist');
+				// console.log(res);
+				expect(res._body.message).to.equal(
+					'Request failed with status code 404'
+				);
 			}));
 	});
 });

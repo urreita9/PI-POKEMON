@@ -67,10 +67,22 @@ const Create = () => {
 	}, [pokemon, history]);
 
 	const handleInputChange = (e) => {
+		const letters = /^[A-Za-z]+$/;
 		if (e.target.name === 'name') {
+			if (e.target.value.match(letters)) {
+				setErrors({
+					...errors,
+					[e.target.name]: null,
+				});
+				setForm({
+					...form,
+					[e.target.name]: e.target.value,
+				});
+				return;
+			}
 			setErrors({
 				...errors,
-				[e.target.name]: null,
+				[e.target.name]: 'Only letters',
 			});
 			setForm({
 				...form,
@@ -78,10 +90,6 @@ const Create = () => {
 			});
 			return;
 		} else if (e.target.name === 'types') {
-			// if (e.target.value === myTypes[0]) return;
-			// if (myTypes.length === 2) return;
-			// setMyTypes([...myTypes, e.target.value]);
-			// return;
 			if (e.target.value === form.types[0]) return;
 			if (form.types.length === 2) return;
 			setForm({ ...form, types: [...form.types, e.target.value] });
@@ -118,13 +126,16 @@ const Create = () => {
 	};
 	const handleSubmit = (e) => {
 		e.preventDefault();
+
 		if (form.name === '' || !form.name || !form.name.trim().length) {
 			setErrors({
 				...errors,
 				name: 'Name is Mandatory',
 			});
+			setForm({ ...form, name: '' });
 			return;
 		}
+
 		if (searchForName(form.name)) {
 			setErrors({
 				...errors,

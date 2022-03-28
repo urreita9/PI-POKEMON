@@ -70,10 +70,7 @@ const Cards = ({
 					{showThisPoks.length ? (
 						showThisPoks.map((pokemon) => (
 							<Link key={pokemon.id} to={`/pokemon/${pokemon.id}`}>
-								<Card
-									{...pokemon}
-									// newSearch={newSearch}
-								/>
+								<Card {...pokemon} />
 							</Link>
 						))
 					) : (

@@ -8,13 +8,17 @@ const fetch = async (url) => {
 };
 
 const fetchPokeApi = async (url) => {
-	const data = await fetch(url);
+	try {
+		const data = await fetch(url);
 
-	const allPokemons = await Promise.all(
-		data.map(({ url }) => fetchOneByOne(url))
-	);
+		const allPokemons = await Promise.all(
+			data.map(({ url }) => fetchOneByOne(url))
+		);
 
-	return allPokemons;
+		return allPokemons;
+	} catch (error) {
+		return error;
+	}
 };
 const fetchOneByOne = async (url) => {
 	try {

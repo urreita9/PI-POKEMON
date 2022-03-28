@@ -23,12 +23,17 @@ export const getPokemons = (offset) => {
 			const res = await fetch(
 				`http://localhost:3001/pokemons?offset=${offset}&limit=40`
 			);
+			if (!res.ok) {
+				return {
+					msg: `Status ${res.status}. 
+					Something went wrong. Please contact administrator.`,
+				};
+			}
 			const data = await res.json();
 
 			dispatch({ type: GET_POKEMONS, payload: data });
 		} catch (error) {
 			console.log(error);
-			// dispatch({ type: GET_POKEMONS_ERROR, payload: true });
 		}
 	};
 };
@@ -57,10 +62,8 @@ export const getPokemonByNameFromApi = (name) => {
 		try {
 			const res = await fetch(`http://localhost:3001/pokemons?name=${name}`);
 			const data = await res.json();
-			const { msg } = data;
-			console.log(data);
-			if (msg) {
-				return msg;
+			if (data.message) {
+				return data.message;
 			}
 			dispatch({ type: GET_POKEMON_BY_NAME_FROM_API, payload: data });
 		} catch (error) {

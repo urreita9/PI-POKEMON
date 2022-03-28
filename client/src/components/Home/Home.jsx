@@ -1,15 +1,16 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getPokemons } from '../../redux/actions/actions';
+import { filterAllAll, getPokemons } from '../../redux/actions/actions';
 import Cards from '../Cards/Cards';
 import Forms from '../Forms/Forms';
+import Modal from '../Modal/Modal';
 import Pagination from '../Pagination/Pagination';
 
 const Home = () => {
 	const dispatch = useDispatch();
 	const allPokemons = useSelector((state) => state.pokemons);
 	const pokemons = useSelector((state) => state.filteredPokemons);
-	// const error = useSelector((state) => state.error);
+	const [error, setError] = useState({ active: false, msg: '' });
 	const [newOffset, setNewOffset] = useState(false);
 	const [newSearch, setNewSearch] = useState(false);
 	const [currentPage, setCurrentPage] = useState(1);
@@ -19,10 +20,20 @@ const Home = () => {
 
 	useEffect(() => {
 		if (!allPokemons.length || allPokemons.length === 1 || newOffset) {
-			dispatch(getPokemons(offset.current)); // offset = 0
+			dispatch(getPokemons(offset.current)).then((data) => {
+				if (data) {
+					setError({ active: true, msg: data.msg });
+				}
+			}); // offset = 0
 			setNewOffset(false);
 		}
 	}, [dispatch, newOffset, allPokemons.length]);
+
+	useEffect(() => {
+		if (pokemons.length) {
+			dispatch(filterAllAll());
+		}
+	}, []);
 
 	const handlePaginationNext = (currentPage) => {
 		setCurrentPage(currentPage);
@@ -35,9 +46,18 @@ const Home = () => {
 			offset.current = 0;
 		}
 	};
+	const handleError = () => {
+		setError({
+			active: false,
+			msg: '',
+		});
+	};
 
 	return (
 		<div className='home_container'>
+			{error.active && (
+				<Modal text={error.msg} handleError={handleError} loading={false} />
+			)}
 			<Forms
 				setNewSearch={setNewSearch}
 				setCurrentPage={setCurrentPage}

@@ -14,21 +14,24 @@ const SearchForm = ({ setNewSearch }) => {
 	const pokemons = useSelector((state) => state.pokemons);
 	const pokemon = useSelector((state) => state.pokemon);
 	const [name, setName] = useState('');
-	const [error, setError] = useState(false);
+	const [errors, setErrors] = useState(false);
 	const [loading, setLoading] = useState(false);
 	useEffect(() => {
-		if (error) {
+		if (errors) {
 			setNewSearch(false);
 		}
-	}, [error]);
+	}, [errors]);
 	useEffect(() => {
 		if (pokemon.id) setLoading(false);
 	}, [pokemon.id]);
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
+		if (!name || name === '' || !name.trim().length) {
+			setName('');
+			return;
+		}
 		setLoading(true);
-		if (!name) return;
 		if (searchFromState('name', name.toLowerCase(), pokemons)) {
 			dispatch(getPokemonByNameFromState(name.toLowerCase()));
 			setName('');
@@ -38,7 +41,7 @@ const SearchForm = ({ setNewSearch }) => {
 		}
 		dispatch(getPokemonByNameFromApi(name.toLowerCase())).then((data) => {
 			if (data) {
-				setError(true);
+				setErrors(true);
 				setLoading(false);
 			}
 		});
@@ -47,12 +50,12 @@ const SearchForm = ({ setNewSearch }) => {
 		dispatch(cleanPokemon());
 	};
 	const handleInputChange = (e) => {
-		setError(false);
+		setErrors(false);
 		setName(e.target.value);
 	};
 
 	const handleError = () => {
-		setError(false);
+		setErrors(false);
 	};
 	return (
 		<form onSubmit={handleSubmit} className='form-flex'>
@@ -69,7 +72,7 @@ const SearchForm = ({ setNewSearch }) => {
 					loading={loading}
 				/>
 			)}
-			{error && (
+			{errors && (
 				<Modal
 					text='Pokemon doesnt exist'
 					handleError={handleError}
