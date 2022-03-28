@@ -77,9 +77,9 @@ export const getPokemonByIdFromApi = (id) => {
 		try {
 			const res = await fetch(`http://localhost:3001/pokemons/${id}`);
 			const data = await res.json();
-			const { msg } = data;
-			if (msg) {
-				return msg;
+
+			if (data.message) {
+				return data;
 			}
 			dispatch({ type: GET_POKEMON_BY_ID_FROM_API, payload: data });
 		} catch (error) {

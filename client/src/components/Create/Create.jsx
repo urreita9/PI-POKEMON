@@ -112,6 +112,10 @@ const Create = () => {
 					...errors,
 					[e.target.name]: 'Must be a number between 1 and 300',
 				});
+				setForm({
+					...form,
+					[e.target.name]: number,
+				});
 			} else {
 				setErrors({
 					...errors,
@@ -315,7 +319,7 @@ const Create = () => {
 						type='submit'
 						className='form_button create'
 						onClick={() => {
-							if (errors.name) {
+							if (errors.name || errors.height || errors.weight) {
 								return;
 							} else {
 								clickOnCreate.current = true;

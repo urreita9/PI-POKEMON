@@ -1,6 +1,5 @@
 import {
 	GET_POKEMONS,
-	// GET_POKEMONS_ERROR,
 	GET_POKEMON_BY_NAME_FROM_API,
 	GET_POKEMON_BY_NAME_FROM_STATE,
 	GET_POKEMON_BY_ID_FROM_API,
@@ -15,12 +14,10 @@ import {
 	ORDER_STRENGTH_W_F,
 	CLEAN_POKEMON,
 	POST_POKEMON,
-	// CLEAN_ERROR,
 } from '../actions/actions';
 
 const initialState = {
 	pokemons: [],
-	// error: false,
 	filteredPokemons: [],
 	pokemon: {},
 };
@@ -38,14 +35,11 @@ const pokemonReducer = (state = initialState, action) => {
 				pokemons: [...takeOutPrevDb, ...payload],
 				filteredPokemons: [...takeOutPrevDb, ...payload],
 			};
-		// case GET_POKEMONS_ERROR:
-		// 	return { ...state, error: payload };
+
 		case GET_POKEMON_BY_NAME_FROM_API:
 			return {
 				...state,
 				pokemon: payload,
-				// pokemons: [...state.pokemons, payload],
-				// filteredPokemons: [...state.pokemons, payload],
 			};
 
 		case GET_POKEMON_BY_NAME_FROM_STATE:
@@ -53,9 +47,6 @@ const pokemonReducer = (state = initialState, action) => {
 				(pokemon) => pokemon.name === payload
 			);
 			return { ...state, pokemon: findPokemon };
-
-		// case GET_POKEMON_BY_ID_FROM_API:
-		// 	return { ...state, pokemon: payload };
 
 		case GET_POKEMON_BY_ID_FROM_API:
 			if (payload.createdDb) {
@@ -156,9 +147,6 @@ const pokemonReducer = (state = initialState, action) => {
 
 		case CLEAN_POKEMON:
 			return { ...state, pokemon: payload };
-
-		// case CLEAN_ERROR:
-		// 	return { ...state, error: payload };
 
 		case POST_POKEMON:
 			return {
