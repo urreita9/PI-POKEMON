@@ -16,7 +16,10 @@ server.use(bodyParser.json({ limit: '50mb' }));
 server.use(cookieParser());
 server.use(morgan('dev'));
 server.use((req, res, next) => {
-	res.header('Access-Control-Allow-Origin', 'http://localhost:3000'); // update to match the domain you will make the request from
+	res.header(
+		'Access-Control-Allow-Origin',
+		'https://pi-pokemon-4pew9g4l1-urreita9.vercel.app/'
+	); // update to match the domain you will make the request from
 	res.header('Access-Control-Allow-Credentials', 'true');
 	res.header(
 		'Access-Control-Allow-Headers',
