@@ -56,9 +56,9 @@
 		display: flex;
 		align-items: center;
 		justify-content: space-around;
-		// flex-direction: column;
-		.getMore,
-		.create {
+		width: 400px;
+		margin: 0 auto;
+		.getMore {
 			font-size: 1em;
 		}
 		.create {
@@ -66,6 +66,7 @@
 			-webkit-text-stroke-width: 1px;
 			-webkit-text-stroke-color: black;
 			letter-spacing: 3px;
+			font-size: 1.5em;
 		}
 	}
 }
