@@ -58,8 +58,16 @@ $medium: 900px;
 		width: 90%;
 		margin: 0 auto;
 	}
+	.create {
+		display: block;
+	}
 	.create .form-create .form_imgs {
 		width: 400px;
+	}
+	.create_buttons {
+		.getMore .create {
+			font-size: 2em;
+		}
 	}
 	.detail_socials_grid {
 		display: block;

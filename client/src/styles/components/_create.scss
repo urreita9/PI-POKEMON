@@ -6,9 +6,13 @@
 	width: 90%;
 	margin: 0 auto;
 	font-size: 2em;
+	display: grid;
+	grid-template-rows: auto 1fr auto;
+	min-height: calc(100vh - 80px);
 	.create_title {
 		letter-spacing: 4px;
 		margin-bottom: 10px;
+		text-align: center;
 	}
 	.form-create {
 		.input_container {
@@ -55,8 +59,9 @@
 		align-items: center;
 		justify-content: space-around;
 		// flex-direction: column;
-		.getMore {
-			font-size: 1.5em;
+		.getMore,
+		.create {
+			font-size: 1em;
 		}
 		.create {
 			color: #f40061;
