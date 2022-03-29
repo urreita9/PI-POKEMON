@@ -21,13 +21,13 @@ describe('Pokemon model', () => {
 		});
 	});
 	describe('hp', () => {
+		it('should work when its a valid value', () => {
+			Pokemon.create({ hp: 25 });
+		});
 		it('should throw an error if hp is a string', (done) => {
 			Pokemon.create({ hp: 'string' })
 				.then(() => done(new Error('It requires a valid hp value')))
 				.catch(() => done());
-		});
-		it('should work when its a valid value', () => {
-			Pokemon.create({ hp: 25 });
 		});
 	});
 });

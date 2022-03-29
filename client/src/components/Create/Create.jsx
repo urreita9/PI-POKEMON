@@ -167,6 +167,7 @@ const Create = () => {
 
 	return (
 		<div className='create'>
+			<h2 className='create_title'>Create your own Pokemons!</h2>
 			{loading && <Modal text='Hang in there...' loading={true} />}
 			<form onSubmit={handleSubmit} className='form-create'>
 				<Input

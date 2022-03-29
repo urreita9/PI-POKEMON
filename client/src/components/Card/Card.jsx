@@ -9,8 +9,8 @@ const Card = ({ imgDesktop, name, types }) => {
 				<img className='card_img' src={imgDesktop} alt='' />
 			</div>
 
-			<div className='card_name'>{capitalName}</div>
 			<div className='card_types'>
+				<div className='card_name'>{capitalName}</div>
 				<ul className='card_types_list'>
 					{types.map((type, i) => {
 						const capitalType = type.charAt(0).toUpperCase() + type.slice(1);

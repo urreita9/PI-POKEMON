@@ -24,10 +24,24 @@ $medium: 900px;
 		}
 		a,
 		.card_container {
-			font-size: 3.5vw;
+			font-size: 2.5vw;
 			letter-spacing: 4px;
 			&:hover {
 				padding: 3px;
+			}
+			.card_img_container {
+				width: 33%;
+				img {
+					width: 75%;
+				}
+			}
+			.card_types {
+				width: 67%;
+				flex-direction: column;
+				.card_name {
+					font-size: 1.3em;
+					padding: 5px;
+				}
 			}
 		}
 	}

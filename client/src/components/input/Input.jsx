@@ -25,8 +25,8 @@ const Input = ({
 				placeholder={placeholder}
 				autoComplete='off'
 			/>
-			{showValue && <span>{value}</span>}
-			{error && <span>{error}</span>}
+			{showValue && <span style={{ marginLeft: '10px' }}>{value}</span>}
+			{error && <span style={{ marginLeft: '10px' }}>{error}</span>}
 		</div>
 	);
 };

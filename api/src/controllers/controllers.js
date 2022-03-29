@@ -116,7 +116,7 @@ const postPokemons = async (req, res) => {
 		pokemon.addType(matchTypes);
 		res.status(201).json({ pokemon, created });
 	} catch (error) {
-		res.send(error);
+		res.status(400).send(error);
 	}
 };
 
@@ -137,7 +137,7 @@ const getPokemonTypes = async (req, res) => {
 		const typesFromDb = await Type.findAll();
 		res.status(200).json(typesFromDb);
 	} catch (error) {
-		res.send(error);
+		res.status(400).send(error);
 	}
 };
 

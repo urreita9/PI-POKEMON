@@ -6,6 +6,10 @@
 	width: 90%;
 	margin: 0 auto;
 	font-size: 2em;
+	.create_title {
+		letter-spacing: 4px;
+		margin-bottom: 10px;
+	}
 	.form-create {
 		.input_container {
 			display: flex;
