@@ -2,6 +2,15 @@ $small: 300px;
 $medium: 900px;
 
 @media screen and (min-width: $medium) {
+	.home_container {
+		display: block;
+		margin: 0 auto;
+		width: 90%;
+
+		.pagination {
+			margin: 0 auto;
+		}
+	}
 	.entry_wrapper {
 		.pikachuAnimated,
 		.charizardAnimated,
@@ -39,7 +48,6 @@ $medium: 900px;
 				width: 67%;
 				flex-direction: column;
 				.card_name {
-					font-size: 1.3em;
 					padding: 5px;
 				}
 			}
@@ -52,6 +60,9 @@ $medium: 900px;
 	}
 	.create .form-create .form_imgs {
 		width: 400px;
+	}
+	.detail_socials_grid {
+		display: block;
 	}
 	.detail_container {
 		display: flex;
@@ -79,4 +90,3 @@ $medium: 900px;
 		display: none;
 	}
 }
-//#B12F2F

@@ -1,26 +1,15 @@
 import { Link } from 'react-router-dom';
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getPokemons } from '../../redux/actions/actions';
 
 const Entry = () => {
 	const dispatch = useDispatch();
 	const allPokemons = useSelector((state) => state.pokemons);
-	const offset = useRef(0);
 	useEffect(() => {
 		dispatch(getPokemons(0));
-		// .then((data) => {
-		// 	if (data) {
-		// 		setError({ active: true, msg: data.msg });
-		// 	}
-		// }); // offset = 0
 	}, [dispatch]);
 
-	// useEffect(() => {
-	// 	if (pokemons.length) {
-	// 		dispatch(filterAllAll());
-	// 	}
-	// }, []);
 	return (
 		<div className='entry_wrapper'>
 			<div

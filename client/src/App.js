@@ -27,7 +27,6 @@ function App() {
 					</Switch>
 				</Route>
 			</Switch>
-			<Socials className='mobile' />
 		</Router>
 	);
 }

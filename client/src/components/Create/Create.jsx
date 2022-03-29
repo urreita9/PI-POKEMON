@@ -5,6 +5,7 @@ import { postPokemons } from '../../redux/actions/actions';
 import { fetchTypes, getPokemons } from '../../utils/utils';
 import Input from '../input/Input';
 import Modal from '../Modal/Modal';
+import Socials from '../Socials/Socials';
 const initialState = {
 	name: '',
 	attack: 50,
@@ -331,6 +332,7 @@ const Create = () => {
 					</button>
 				</div>
 			</form>
+			<Socials className='mobile' />
 		</div>
 	);
 };

@@ -4,7 +4,7 @@
 	width: 100%;
 	list-style: none;
 	.nav_social {
-		margin-left: 20px;
+		margin: 0 10px;
 	}
 	.nav_social .social {
 		width: 30px;
@@ -17,4 +17,8 @@
 }
 .mobile {
 	justify-content: center;
+	margin-bottom: 10px;
+	// position: absolute;
+	// bottom: 0;
+	// width: 100%;
 }

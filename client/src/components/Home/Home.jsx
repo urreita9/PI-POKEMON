@@ -5,6 +5,7 @@ import Cards from '../Cards/Cards';
 import Forms from '../Forms/Forms';
 import Modal from '../Modal/Modal';
 import Pagination from '../Pagination/Pagination';
+import Socials from '../Socials/Socials';
 
 const Home = () => {
 	const dispatch = useDispatch();
@@ -83,6 +84,7 @@ const Home = () => {
 					filtered={filtered}
 				/>
 			)}
+			<Socials className='mobile' />
 		</div>
 	);
 };
