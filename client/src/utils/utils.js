@@ -1,4 +1,5 @@
 const REACT_APP_API = process.env.REACT_APP_API || 'http://localhost:3001';
+
 export const fetchTypes = async () => {
 	try {
 		const typesFetch = await fetch(`${REACT_APP_API}/types`);
