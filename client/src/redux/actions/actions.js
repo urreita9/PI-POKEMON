@@ -1,5 +1,4 @@
 export const GET_POKEMONS = 'GET_POKEMONS';
-// export const GET_POKEMONS_ERROR = 'GET_POKEMONS_ERROR';
 export const GET_POKEMON_BY_NAME_FROM_API = 'GET_POKEMON_BY_NAME_FROM_API';
 export const GET_POKEMON_BY_NAME_FROM_STATE = 'GET_POKEMON_BY_NAME_FROM_STATE';
 export const GET_POKEMON_BY_ID_FROM_STATE = 'GET_POKEMON_BY_ID_FROM_STATE';
@@ -15,13 +14,14 @@ export const ORDER_NAME_Z_A = 'ORDER_NAME_Z_A';
 export const ORDER_STRENGTH_W_F = 'ORDER_STRENGTH_W_F';
 export const ORDER_STRENGTH_S_F = 'ORDER_STRENGTH_S_F';
 export const CLEAN_POKEMON = 'CLEAN_POKEMON';
-// export const CLEAN_ERROR = 'CLEAN_ERROR';
+
+const REACT_APP_API = process.env.REACT_APP_API || 'http://localhost:3001';
 
 export const getPokemons = (offset) => {
 	return async (dispatch) => {
 		try {
 			const res = await fetch(
-				`http://localhost:3001/pokemons?offset=${offset}&limit=40`
+				`${REACT_APP_API}/pokemons?offset=${offset}&limit=40`
 			);
 			if (!res.ok) {
 				return {
@@ -41,7 +41,7 @@ export const getPokemons = (offset) => {
 export const postPokemons = (pokemon) => {
 	return async (dispatch) => {
 		try {
-			const res = await fetch(`http://localhost:3001/pokemons`, {
+			const res = await fetch(`${REACT_APP_API}/pokemons`, {
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json',
@@ -60,7 +60,7 @@ export const postPokemons = (pokemon) => {
 export const getPokemonByNameFromApi = (name) => {
 	return async (dispatch) => {
 		try {
-			const res = await fetch(`http://localhost:3001/pokemons?name=${name}`);
+			const res = await fetch(`${REACT_APP_API}/pokemons?name=${name}`);
 			const data = await res.json();
 			if (data.message) {
 				return data.message;
@@ -75,7 +75,7 @@ export const getPokemonByNameFromApi = (name) => {
 export const getPokemonByIdFromApi = (id) => {
 	return async (dispatch) => {
 		try {
-			const res = await fetch(`http://localhost:3001/pokemons/${id}`);
+			const res = await fetch(`${REACT_APP_API}/pokemons/${id}`);
 			const data = await res.json();
 
 			if (data.message) {
@@ -162,10 +162,3 @@ export const cleanPokemon = () => {
 		payload: {},
 	};
 };
-
-// export const cleanError = () => {
-// 	return {
-// 		type: CLEAN_ERROR,
-// 		payload: false,
-// 	};
-// };

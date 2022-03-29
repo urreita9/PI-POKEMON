@@ -1,6 +1,7 @@
+const REACT_APP_API = process.env.REACT_APP_API || 'http://localhost:3001';
 export const fetchTypes = async () => {
 	try {
-		const typesFetch = await fetch('http://localhost:3001/types');
+		const typesFetch = await fetch(`${REACT_APP_API}/types`);
 		const types = await typesFetch.json();
 		return types;
 	} catch (error) {
@@ -20,7 +21,7 @@ export const searchFromState = (arg, value, pokemons) => {
 export const getPokemons = async (offset) => {
 	try {
 		const res = await fetch(
-			`http://localhost:3001/pokemons?offset=${offset}&limit=40`
+			`${REACT_APP_API}/pokemons?offset=${offset}&limit=40`
 		);
 		const data = await res.json();
 

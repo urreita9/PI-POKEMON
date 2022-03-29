@@ -10,7 +10,9 @@ import Detail from './components/Detail/Detail';
 import Entry from './components/Entry/Entry';
 import Home from './components/Home/Home';
 import Nav from './components/Nav/Nav';
-import Socials from './components/Socials/Socials';
+import dotenv from 'dotenv';
+
+dotenv.config();
 
 function App() {
 	return (
